@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import './style.scss';
 
-interface Props {
+// Tipagem explícita da prop
+interface LessonNotesProps {
   lessonId: string;
 }
 
-const LessonNotes = ({ lessonId }: Props) => {
+const LessonNotes: React.FC<LessonNotesProps> = ({ lessonId }) => {
   const [note, setNote] = useState('');
 
-  // Carrega nota do localStorage
+  // Carrega a anotação do localStorage
   useEffect(() => {
     const saved = localStorage.getItem(`note-${lessonId}`);
     if (saved) setNote(saved);
   }, [lessonId]);
 
-  // Salva nota
+  // Salva a anotação
   const handleSave = () => {
     localStorage.setItem(`note-${lessonId}`, note);
   };
