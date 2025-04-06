@@ -1,0 +1,45 @@
+.course-card {
+  position: relative;
+  width: 240px;
+  flex-shrink: 0;
+  background-color: #1e293b;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.03);
+  }
+
+  &.locked {
+    filter: grayscale(100%);
+    pointer-events: none;
+    position: relative;
+
+    &::after {
+      content: '🔒';
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      font-size: 1.2rem;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+    }
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .course-title {
+    padding: 0.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+  }
+}

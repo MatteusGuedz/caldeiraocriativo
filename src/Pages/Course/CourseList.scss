@@ -1,0 +1,41 @@
+.course-list-page {
+  padding: 2rem;
+  background: #0f172a;
+  color: #fff;
+  width: 100%; // <-- Aqui
+
+
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .course-category {
+    margin-bottom: 3rem;
+  }
+
+  .course-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    padding-bottom: 0.5rem;
+    scroll-snap-type: x mandatory;
+  
+    &::-webkit-scrollbar {
+      height: 8px;
+    }
+  
+    &::-webkit-scrollbar-thumb {
+      background: #475569;
+      border-radius: 8px;
+    }
+  
+    > * {
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+    }
+  }
+  
+  
+  
+}

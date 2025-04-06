@@ -1,0 +1,40 @@
+.lesson-progress {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: #f0fdf4;
+    border: 2px solid #bbf7d0;
+    border-radius: 10px;
+  
+    .progress-bar {
+      height: 12px;
+      background: #e5e7eb;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 0.75rem;
+  
+      .fill {
+        height: 100%;
+        background: #22c55e;
+        transition: width 0.3s ease;
+      }
+    }
+  
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.95rem;
+      color: #065f46;
+      font-weight: 500;
+    }
+  
+    .badge {
+      margin-top: 1rem;
+      background: #ecfccb;
+      color: #365314;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      display: inline-block;
+      font-weight: bold;
+    }
+  }
+  

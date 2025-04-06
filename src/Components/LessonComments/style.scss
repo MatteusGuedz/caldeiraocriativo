@@ -1,0 +1,52 @@
+.lesson-comments {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: #f9fafb;
+    border-radius: 10px;
+  
+    h3 {
+      margin-bottom: 1rem;
+    }
+  
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+  
+      textarea {
+        resize: vertical;
+        min-height: 80px;
+        padding: 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 0.95rem;
+      }
+  
+      button {
+        align-self: flex-start;
+        background: #1f2937;
+        color: white;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+  
+        &:hover {
+          background: #111827;
+        }
+      }
+    }
+  
+    .comment-list {
+      margin-top: 1.5rem;
+  
+      .comment {
+        background: white;
+        padding: 0.75rem 1rem;
+        border-radius: 6px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        margin-bottom: 0.75rem;
+      }
+    }
+  }
+  

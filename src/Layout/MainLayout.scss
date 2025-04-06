@@ -1,0 +1,21 @@
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+
+  .layout-body {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .page-content {
+    flex: 1;
+    overflow-y: auto;
+    background-color: #090e1b;
+    padding: 1rem;
+    color: #fff;
+  }
+}
+ 
