@@ -1,21 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
-import { Outlet, useLocation } from 'react-router-dom';
-
-
+import { Outlet } from 'react-router-dom';
 import './MainLayout.scss';
 
 const MainLayout = () => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
-  const [collapsed, setCollapsed] = useState(false); // << novo
+  const [collapsed, setCollapsed] = useState(false);
 
   const toggleMobileSidebar = () => {
     setMobileSidebarOpen(prev => !prev);
   };
 
   const toggleCollapse = () => {
-    setCollapsed(prev => !prev); // << novo
+    setCollapsed(prev => !prev);
   };
 
   return (
@@ -25,7 +23,7 @@ const MainLayout = () => {
         <Sidebar
           mobileOpen={mobileSidebarOpen}
           collapsed={collapsed}
-          onToggleCollapse={toggleCollapse} // << novo
+          onToggleCollapse={toggleCollapse}
         />
         <main className="main-content">
           <Outlet />
