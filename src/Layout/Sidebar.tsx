@@ -18,7 +18,7 @@ interface SidebarProps {
 }
 
 const navItems = [
-  { to: '/', icon: IconHouseSolid, label: 'Dashboard' },
+  { to: '/dashboard', icon: IconHouseSolid, label: 'Dashboard' },
   { to: '/courses', icon: IconBookSolid, label: 'Cursos' },
   { to: '/admin/analytics', icon: IconChart, label: 'Analytics' },
   { to: '/support/faq', icon: IconCircleInfo, label: 'Ajuda' },

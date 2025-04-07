@@ -18,8 +18,9 @@ function App() {
     <Router>
       <Routes>
         <Route element={<MainLayout />}>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/courses" element={<CourseList />} />
+          <Route path="/" element={<CourseList />} />
           <Route path="/courses/:courseId" element={<CourseDetail />} />
           <Route path="/lesson/:courseId/:moduleId/:lessonId" element={<Lesson />} />
           <Route path="/admin/upload-lesson" element={<div>Upload de Aula</div>} />

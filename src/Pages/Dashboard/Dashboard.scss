@@ -1,0 +1,127 @@
+.dashboard {
+    padding: 20px;
+    background-color: #f9fafb;
+    min-height: 100vh; // Certificando-se de que a altura será dinâmica
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Garante que a página seja rolável */
+    padding-bottom: 20px; /* Espaço extra no fundo */
+    margin-bottom: 100px;
+   
+  }
+  
+  .stats, .charts {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap; /* Flex para os itens se ajustarem na tela */
+    margin-top: 20px;
+    margin-top: 50px;
+  }
+  
+  .stat-card, .chart {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    flex: 1; /* Ajusta o tamanho conforme necessário */
+    min-width: 300px; /* Tamanho mínimo para os itens */
+    min-height: 250px; /* Garantir altura mínima */
+  }
+  
+  h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .user-table {
+    margin-top: 40px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; /* Permite rolagem vertical se necessário */
+    max-height: 300px; /* Limita a altura da tabela */
+  }
+  
+  .user-table h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Garante que as colunas da tabela sejam proporcionais */
+  }
+
+  thead {
+    position: sticky; /* Mantém o cabeçalho fixo ao rolar */
+    top: 0; /* Fixa o cabeçalho no topo */
+    background-color: #f1f5f9; /* Cor de fundo para o cabeçalho */
+    z-index: 1; /* Garante que o cabeçalho fique acima das linhas do corpo */
+  }
+  
+  table th, table td {
+    padding: 12px;
+    text-align: left;
+    word-wrap: break-word;
+  }
+  
+  table th {
+    background-color: #f1f5f9;
+  }
+  
+  table img.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  button {
+    padding: 8px 12px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+  
+    &:hover {
+      background-color: #2980b9;
+    }
+  }
+  
+  .progress-bar-container {
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .chart-container {
+    margin-top: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .stats, .charts {
+      flex-direction: column;
+    }
+  
+    .stat-card, .chart {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  
+    .user-table {
+      overflow-x: auto; /* Permite rolagem horizontal se necessário */
+    }
+  
+    .dashboard {
+      padding: 10px; /* Diminui o padding para telas menores */
+    }
+  }
+  
