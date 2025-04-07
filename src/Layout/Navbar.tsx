@@ -1,21 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Navbar.scss';
 
-const Navbar = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+interface NavbarProps {
+  onToggleSidebar: () =>  void;
+}
 
-  const toggleSidebar = () => {
-    const sidebar = document.querySelector('.sidebar');
-    if (sidebar) {
-      sidebar.classList.toggle('open');
-      setSidebarOpen(!sidebarOpen);
-    }
-  };
-
+const Navbar = ({ onToggleSidebar }: NavbarProps) => { 
+  
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        <button className="menu-button" onClick={toggleSidebar}>
+      <button className="menu-button" onClick={() => {  onToggleSidebar();
+}}>
+
           ☰
         </button>
         <h1>Caldeirão Criativo</h1>

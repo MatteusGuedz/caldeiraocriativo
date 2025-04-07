@@ -3,7 +3,7 @@ import './SCSS/style.scss';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Dashboard from './Pages/Dashboard';
 import MainLayout from './Layout/MainLayout';
-import CourseList from './Pages/Course/List';
+import CourseList from './Pages/Course/CourseList';
 import CourseDetail from './Pages/Course/Detail';
 import Lesson from './Pages/Lesson';
 import Login from './Pages/Auth/Login';

@@ -1,21 +1,42 @@
-.layout-container {
+.main-layout {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  overflow: hidden;
+}
 
-  .layout-body {
-    display: flex;
-    flex: 1;
-    overflow: hidden;
+.main-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+/* Sidebar some no mobile */
+@media (max-width: 768px) {
+  .main-body {
+    flex-direction: column;
   }
 
-  .page-content {
-    flex: 1;
-    overflow-y: auto;
-    background-color: #090e1b;
-    padding: 1rem;
-    color: #fff;
+  .sidebar {
+    display: none;
+
+    &.mobile-open {
+      display: flex !important;
+      position: fixed;
+      top: 64px; // altura do navbar
+      left: 0;
+      width: 220px;
+      height: calc(100vh - 64px);
+      background-color: #0f172a;
+      z-index: 9999;
+      transform: translateX(0);
+      flex-direction: column;
+    }
   }
 }
- 
+

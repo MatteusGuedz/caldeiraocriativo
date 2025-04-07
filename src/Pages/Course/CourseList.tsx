@@ -26,11 +26,14 @@ const categories = [
       { title: 'Curso de Tailwind', image: ImgUrso, available: false },
     ],
   },
+  
 ];
 
 const CourseList = () => {
   return (
+    
     <div className="course-list-page">
+      
     {categories.map((cat, index) => (
       <div key={index} className="course-category">
         <h2>{cat.title}</h2>
