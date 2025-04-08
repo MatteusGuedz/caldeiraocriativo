@@ -1,124 +1,284 @@
+// src/Pages/Lesson/Lesson.scss
+@import '../../SCSS/_variables.scss';
+
 .lesson-page {
   display: flex;
-  flex-wrap: wrap; // Adicionado para consistência com CourseDetail
-  gap: 2rem;
-  padding: 2rem;
-  background-color: #0b1120; // Atualizado para a cor de fundo do CourseDetail
-
-  .lesson-video {
-    flex: 2; // Ajustado para corresponder ao CourseDetail
-    min-width: 300px; // Adicionado para consistência
-
-    video {
-      width: 100%;
-      border-radius: 12px;
-      margin-bottom: 1rem;
-    }
-
-    h2 {
-      margin: 0; // Ajustado para corresponder ao CourseDetail
-      color: #facc15; // Atualizado para a cor do CourseDetail
-      font-size: 1.4rem; // Adicionado para consistência
-    }
-
-    .lesson-transcript {
-      margin-top: 2rem;
-      background: #1e293b; // Atualizado para a cor de fundo do CourseDetail (mesma da sidebar)
-      padding: 1.5rem;
-      border-radius: 10px; // Ajustado para corresponder ao CourseDetail
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); // Mantido do original
-
-      h3 {
-        margin-bottom: 1rem;
-        color: #f1f5f9; // Mantido, consistente com CourseDetail
+  height: 100%;
+  overflow: hidden;
+  
+  .lesson-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: $spacing-lg;
+    
+    .lesson-header {
+      margin-bottom: $spacing-lg;
+      
+      h1 {
+        font-size: 1.8rem;
+        margin-bottom: $spacing-xs;
       }
-
-      p {
-        color: #94a3b8; // Mantido, consistente com CourseDetail
-        line-height: 1.6;
+      
+      .lesson-breadcrumb {
+        font-size: 0.9rem;
+        color: $text-secondary;
       }
     }
-  }
-
-  .lesson-sidebar {
-    flex: 1; // Ajustado para corresponder ao CourseDetail
-    min-width: 280px; // Adicionado para consistência
-    background: #1e293b; // Atualizado para a cor de fundo do CourseDetail
-    border-radius: 10px; // Ajustado para corresponder ao CourseDetail
-    padding: 1.5rem;
-    color: #fff; // Adicionado para consistência
-    height: fit-content;
-
-    h3 {
-      margin-bottom: 1rem;
-      color: #f1f5f9; // Mantido, consistente com CourseDetail
-    }
-
-    .module {
-      margin-bottom: 1rem; // Ajustado para corresponder ao CourseDetail
-
-      .module-toggle {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: none;
-        border: none;
-        color: #facc15;
+    
+    .video-container {
+      position: relative;
+      padding-top: 56.25%; /* 16:9 Aspect Ratio */
+      background-color: #000;
+      border-radius: $border-radius-md;
+      overflow: hidden;
+      margin-bottom: $spacing-lg;
+      
+      > div {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
-        padding: 0;
-        font-size: 1rem;
-        font-weight: bold;
-        cursor: pointer;
-
-        .arrow {
-          transition: transform 0.3s ease;
-        }
-
-        .arrow.open {
-          transform: rotate(180deg);
+        height: 100%;
+      }
+    }
+    
+    .lesson-tabs {
+      margin-bottom: $spacing-lg;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: $border-radius-md;
+      
+      .tab-headers {
+        display: flex;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        
+        button {
+          flex: 1;
+          background: transparent;
+          color: $text-secondary;
+          padding: $spacing-md;
+          border: none;
+          cursor: pointer;
+          transition: $transition-fast;
+          
+          &:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+          }
+          
+          &.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: $text-primary;
+            border-bottom: 2px solid $accent-color;
+          }
         }
       }
-
-      ul {
-        margin-top: 0.75rem; // Adicionado para consistência
-        padding-left: 0; // Ajustado para corresponder ao CourseDetail
-        list-style: none;
-
-        li {
-          display: flex; // Adicionado para corresponder ao CourseDetail
-          justify-content: space-between; // Adicionado para consistência
-          padding: 0.5rem 0.75rem; // Ajustado para corresponder ao CourseDetail
-          margin-bottom: 0.5rem; // Adicionado para consistência
-          background-color: #0f172a; // Adicionado para corresponder ao CourseDetail
-          border-radius: 6px; // Adicionado para consistência
-          color: #f1f5f9; // Ajustado para corresponder ao CourseDetail
-          cursor: pointer; // Mantido do original
-
-          &.active {
-            font-weight: bold;
-            color: #facc15; // Mantido do original
-            // Removido border-left, já que CourseDetail usa background para destacar
+      
+      .tab-content {
+        padding: $spacing-lg;
+        min-height: 300px;
+        
+        .transcription {
+          p {
+            margin-bottom: $spacing-md;
+            line-height: 1.6;
           }
-
+        }
+        
+        .notes {
+          textarea {
+            width: 100%;
+            height: 250px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: $text-primary;
+            padding: $spacing-md;
+            border-radius: $border-radius-sm;
+            resize: vertical;
+            
+            &:focus {
+              outline: none;
+              border-color: $accent-color;
+            }
+          }
+        }
+        
+        .comments {
+          .comments-list {
+            margin-bottom: $spacing-lg;
+            
+            .comment {
+              margin-bottom: $spacing-md;
+              padding-bottom: $spacing-md;
+              border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+              
+              &:last-child {
+                border-bottom: none;
+              }
+              
+              .comment-header {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: $spacing-xs;
+                
+                .comment-user {
+                  font-weight: bold;
+                }
+                
+                .comment-date {
+                  font-size: 0.8rem;
+                  color: $text-secondary;
+                }
+              }
+              
+              .comment-text {
+                line-height: 1.5;
+              }
+            }
+          }
+          
+          .comment-form {
+            textarea {
+              width: 100%;
+              height: 100px;
+              background-color: rgba(255, 255, 255, 0.05);
+              border: 1px solid rgba(255, 255, 255, 0.1);
+              color: $text-primary;
+              padding: $spacing-md;
+              border-radius: $border-radius-sm;
+              margin-bottom: $spacing-md;
+              resize: none;
+              
+              &:focus {
+                outline: none;
+                border-color: $accent-color;
+              }
+            }
+            
+            button {
+              background-color: $accent-color;
+              color: white;
+              padding: $spacing-sm $spacing-md;
+              border: none;
+              border-radius: $border-radius-sm;
+              cursor: pointer;
+              transition: $transition-fast;
+              
+              &:hover {
+                background-color: darken($accent-color, 10%);
+              }
+            }
+          }
+        }
+      }
+    }
+    
+    .lesson-navigation {
+      display: flex;
+      justify-content: space-between;
+      
+      .btn-next, .btn-complete {
+        padding: $spacing-sm $spacing-md;
+        border: none;
+        border-radius: $border-radius-sm;
+        cursor: pointer;
+        transition: $transition-fast;
+      }
+      
+      .btn-next {
+        background-color: $accent-color;
+        color: white;
+        
+        &:hover {
+          background-color: darken($accent-color, 10%);
+        }
+      }
+      
+      .btn-complete {
+        background-color: #10b981; // Verde
+        color: white;
+        
+        &:hover {
+          background-color: darken(#10b981, 10%);
+        }
+      }
+    }
+  }
+  
+  .lesson-sidebar {
+    width: 300px;
+    background-color: rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+    padding: $spacing-md;
+    
+    .module-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: $spacing-md;
+      padding-bottom: $spacing-sm;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .sidebar-module {
+      margin-bottom: $spacing-md;
+      
+      .sidebar-module-title {
+        font-weight: bold;
+        margin-bottom: $spacing-sm;
+        color: $text-secondary;
+      }
+      
+      .sidebar-lessons {
+        .sidebar-lesson {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: $spacing-sm;
+          margin-bottom: 2px;
+          border-radius: $border-radius-sm;
+          cursor: pointer;
+          transition: $transition-fast;
+          
           &:hover {
-            opacity: 0.8; // Mantido do original
+            background-color: rgba(255, 255, 255, 0.05);
+          }
+          
+          &.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left: 2px solid $accent-color;
+          }
+          
+          &.completed {
+            .lesson-title {
+              color: $text-secondary;
+            }
+            
+            .lesson-status {
+              color: #10b981; // Verde
+            }
+          }
+          
+          .lesson-title {
+            flex: 1;
+            font-size: 0.9rem;
+          }
+          
+          .lesson-status {
+            font-size: 1rem;
           }
         }
       }
     }
   }
-
-  // Responsivo para mobile
-  @media (max-width: 768px) {
+  
+  @media (max-width: $tablet) {
     flex-direction: column;
-
-    .lesson-video,
-    .lesson-sidebar {
-      width: 100%; // Ajustado para corresponder ao CourseDetail
+    
+    .lesson-content {
+      padding: $spacing-md;
     }
-
+    
     .lesson-sidebar {
-      margin-top: 1rem; // Ajustado para corresponder ao CourseDetail
+      width: 100%;
+      max-height: 300px;
     }
   }
 }

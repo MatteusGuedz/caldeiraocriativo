@@ -1,90 +1,36 @@
-import React, { useRef, useState } from 'react';
-import CourseCard from '../../Components/CourseCard';
-import CourseBanner from '../../Components/CourseBanner'; // 🔥 Novo import
+// src/Pages/Course/CourseList.tsx
+import React from 'react';
+import { Link } from 'react-router-dom';
 import './CourseList.scss';
-import ImgUrso from '../../Assets/images/urso.jpg';
-
-const categories = [
-  {
-    title: 'Recomendados pra você',
-    courses: [
-      { title: 'Curso de React', image: ImgUrso, available: true },
-      { title: 'Curso de Node.js', image: ImgUrso, available: false },
-      { title: 'Curso de UX Design', image: ImgUrso, available: true },
-      { title: 'Curso de Node.js', image: ImgUrso, available: false },
-      { title: 'Curso de UX Design', image: ImgUrso, available: true },
-      { title: 'Curso de Node.js', image: ImgUrso, available: false },
-      { title: 'Curso de Node.js', image: ImgUrso, available: false },
-      { title: 'Curso de UX Design', image: ImgUrso, available: true },
-      { title: 'Curso de Node.js', image: ImgUrso, available: false },
-      { title: 'Curso de UX Design', image: ImgUrso, available: true },
-      { title: 'Curso de Node.js', image: ImgUrso, available: false },
-    ],
-  },
-  {
-    title: 'Mais Recentes',
-    courses: [
-      { title: 'Curso de IA', image: ImgUrso, available: true },
-      { title: 'Curso de Tailwind', image: ImgUrso, available: false },
-    ],
-  },
-];
+import { mockCourses } from '../../data/mockData';
 
 const CourseList = () => {
-  const scrollRefs = useRef<HTMLDivElement[]>([]);
-  const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
-  const [dragState, setDragState] = useState({ startX: 0, scrollLeft: 0 });
-
-  const handleMouseDown = (e: React.MouseEvent, index: number) => {
-    const scrollRef = scrollRefs.current[index];
-    if (!scrollRef) return;
-    setDraggingIndex(index);
-    setDragState({
-      startX: e.pageX - scrollRef.offsetLeft,
-      scrollLeft: scrollRef.scrollLeft,
-    });
-  };
-
-  const handleMouseMove = (e: React.MouseEvent, index: number) => {
-    if (draggingIndex !== index) return;
-    const scrollRef = scrollRefs.current[index];
-    if (!scrollRef) return;
-    const x = e.pageX - scrollRef.offsetLeft;
-    const walk = (x - dragState.startX) * 1.2;
-    scrollRef.scrollLeft = dragState.scrollLeft - walk;
-  };
-
-  const handleMouseUp = () => setDraggingIndex(null);
-  const handleMouseLeave = () => setDraggingIndex(null);
-
   return (
     <div className="course-list-page">
-      <CourseBanner /> {/* 🔥 Banner no topo */}
-
-      {categories.map((cat, index) => (
-        <div key={index} className="course-category">
-          <h2>{cat.title}</h2>
-          <div
-            className="course-scroll"
-            ref={(el) => {
-              if (el) scrollRefs.current[index] = el;
-            }}
-            onMouseDown={(e) => handleMouseDown(e, index)}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseLeave}
-            onMouseMove={(e) => handleMouseMove(e, index)}
-          >
-            {cat.courses.map((course, idx) => (
-              <CourseCard
-                key={idx}
-                title={course.title}
-                image={course.image}
-                available={course.available}
-              />
-            ))}
-          </div>
+      <div className="course-banner">
+        <div className="banner-content">
+          <h1>Comece sua jornada criativa</h1>
+          <p>Descubra cursos incríveis e desenvolva novas habilidades com a gente.</p>
+          <button>Comece agora!</button>
         </div>
-      ))}
+      </div>
+      
+      <div className="course-category">
+        <h2>Cursos Disponíveis</h2>
+        <div className="course-grid">
+          {mockCourses.map(course => (
+            <Link to={`/courses/${course.id}`} key={course.id} className="course-card">
+              <div className="course-image">
+                <img src={course.image} alt={course.title} />
+                {!course.available && <div className="course-locked">🔒</div>}
+              </div>
+              <div className="course-info">
+                <h3>{course.title}</h3>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
