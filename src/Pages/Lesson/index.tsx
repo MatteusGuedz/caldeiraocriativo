@@ -2,10 +2,36 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ReactPlayer from 'react-player';
+import { mockCourseDetails } from '../../data/mockData';
+import { useUserProgress } from '../../hooks/useUserProgress';
+import { useAchievements } from '../../hooks/useAchievements';
 import './Lesson.scss';
 
-// Importar os dados mockados
-import { mockCourseDetails } from '../../data/mockData';
+interface Module {
+  id: number;
+  title: string;
+  lessons: Lesson[];
+}
+
+interface Lesson {
+  id: number;
+  title: string;
+  videoUrl: string;
+  duration: string;
+  completed: boolean;
+}
+
+interface Course {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  available: boolean;
+  progress: number;
+  totalLessons: number;
+  completedLessons: number;
+  modules: Module[];
+}
 
 const Lesson = () => {
   const { courseId, moduleId, lessonId } = useParams<{
@@ -19,9 +45,16 @@ const Lesson = () => {
   // Hooks devem ser chamados no nível superior, antes de qualquer condicional
   const [activeTab, setActiveTab] = useState<'transcription' | 'notes' | 'comments'>('transcription');
   const [note, setNote] = useState<string>('');
-  const [currentCourse, setCurrentCourse] = useState<any>(null);
-  const [currentModule, setCurrentModule] = useState<any>(null);
-  const [currentLesson, setCurrentLesson] = useState<any>(null);
+
+const [currentCourse, setCurrentCourse] = useState<Course | null>(null);
+const [currentModule, setCurrentModule] = useState<Module | null>(null);
+const [currentLesson, setCurrentLesson] = useState<Lesson | null>(null);
+  const [comments, setComments] = useState<any[]>([]);
+  const [newComment, setNewComment] = useState('');
+  
+  // Hooks de progresso e conquistas
+  const { completeLesson, startCourse } = useUserProgress();
+  const { updateAchievementProgress, unlockAchievement } = useAchievements();
   
   // Usar useEffect para lidar com a lógica condicional após os hooks
   useEffect(() => {
@@ -36,6 +69,9 @@ const Lesson = () => {
     }
     
     setCurrentCourse(course);
+    
+    // Registrar que iniciou o curso
+    startCourse(courseIdNum);
     
     if (!moduleId) return;
     const moduleIdNum = parseInt(moduleId);
@@ -64,28 +100,72 @@ const Lesson = () => {
     if (savedNote) {
       setNote(savedNote);
     }
-  }, [courseId, moduleId, lessonId]);
-  
-  // Comentários mockados
-  const comments = [
-    { 
-      id: 1, 
-      user: 'Ana Silva', 
-      text: 'Adorei essa aula! Muito bem explicada.', 
-      date: '2023-10-15T14:30:00' 
-    },
-    { 
-      id: 2, 
-      user: 'Carlos Oliveira', 
-      text: 'Tenho uma dúvida sobre o exercício proposto. Alguém pode me ajudar?', 
-      date: '2023-10-16T09:15:00' 
+    
+    // Carregar comentários do localStorage ou criar mockados
+    const savedComments = localStorage.getItem(`comments_${courseId}_${lessonId}`);
+    if (savedComments) {
+      setComments(JSON.parse(savedComments));
+    } else {
+      // Comentários mockados
+      const mockComments = [
+        { 
+          id: 1, 
+          user: 'Ana Silva', 
+          userAvatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+          text: 'Adorei essa aula! Muito bem explicada.', 
+          date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+          likes: 3
+        },
+        { 
+          id: 2, 
+          user: 'Carlos Oliveira',
+          userAvatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+          text: 'Tenho uma dúvida sobre o exercício proposto. Alguém pode me ajudar?', 
+          date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+          likes: 1
+        }
+      ];
+      setComments(mockComments);
+      localStorage.setItem(`comments_${courseId}_${lessonId}`, JSON.stringify(mockComments));
     }
-  ];
+    
+    // Atualizar conquista para anotações
+    if (savedNote && savedNote.length > 0) {
+      updateAchievementProgress(6); // "Anotador"
+    }
+    
+  }, [courseId, moduleId, lessonId, startCourse, updateAchievementProgress]);
 
   const handleVideoEnd = () => {
-    if (!currentLesson) return;
-    // Marcar como concluída (em um sistema real, isso chamaria uma API)
-    console.log('Aula concluída:', currentLesson.id);
+    if (!currentLesson || !courseId || !moduleId) return;
+    
+    const courseIdNum = parseInt(courseId);
+    const lessonIdNum = currentLesson.id;
+    
+    // Marcar a lição como concluída
+    completeLesson(courseIdNum, lessonIdNum);
+    
+    // Atualizar conquistas
+    updateAchievementProgress(1); // "Primeira Aula"
+    updateAchievementProgress(2); // Incrementar progresso de "Maratonista"
+    
+    // Verificar se completou o curso (lógica simplificada)
+    const totalLessons = currentCourse?.modules.reduce(
+      (total, module) => total + module.lessons.length, 0
+    ) || 0;
+    
+    const completedLessonsKey = `course_${courseId}_completed_lessons`;
+    const completedLessons = JSON.parse(localStorage.getItem(completedLessonsKey) || '[]');
+    
+    if (completedLessons.length >= totalLessons) {
+      unlockAchievement(3); // "Criativo Master"
+    }
+    
+    // Atualizar UI
+    setCurrentLesson({
+      ...currentLesson,
+      completed: true
+    });
   };
 
   const handleNoteChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -95,7 +175,41 @@ const Lesson = () => {
     // Salvar no localStorage
     if (courseId && lessonId) {
       localStorage.setItem(`note_${courseId}_${lessonId}`, newNote);
+      
+      // Atualizar conquista se fez anotações
+      if (newNote.length > 0) {
+        updateAchievementProgress(6); // "Anotador"
+      }
     }
+  };
+  
+  const handleAddComment = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!newComment.trim() || !courseId || !lessonId) return;
+    
+    // Criar novo comentário
+    const newCommentObj = {
+      id: Date.now(),
+      user: 'Usuário Demo',
+      userAvatar: 'https://randomuser.me/api/portraits/lego/1.jpg',
+      text: newComment,
+      date: new Date().toISOString(),
+      likes: 0
+    };
+    
+    // Adicionar ao estado
+    const updatedComments = [...comments, newCommentObj];
+    setComments(updatedComments);
+    
+    // Salvar no localStorage
+    localStorage.setItem(`comments_${courseId}_${lessonId}`, JSON.stringify(updatedComments));
+    
+    // Limpar campo de comentário
+    setNewComment('');
+    
+    // Atualizar conquista para comentários
+    updateAchievementProgress(5); // "Perguntador"
   };
 
   const handleNextLesson = () => {
@@ -127,6 +241,11 @@ const Lesson = () => {
       // Redirecionar para a página do curso com uma mensagem de conclusão
       navigate(`/courses/${courseId}`);
     }
+  };
+  
+  const formatDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString() + ' às ' + date.toLocaleTimeString().substring(0, 5);
   };
 
   // Se os dados ainda não foram carregados, mostrar uma mensagem de carregamento
@@ -213,20 +332,41 @@ const Lesson = () => {
                 <div className="comments-list">
                   {comments.map(comment => (
                     <div key={comment.id} className="comment">
-                      <div className="comment-header">
-                        <span className="comment-user">{comment.user}</span>
-                        <span className="comment-date">
-                          {new Date(comment.date).toLocaleDateString()}
-                        </span>
+                      <div className="comment-avatar">
+                        <img src={comment.userAvatar} alt={comment.user} />
                       </div>
-                      <div className="comment-text">{comment.text}</div>
+                      <div className="comment-content">
+                        <div className="comment-header">
+                          <span className="comment-user">{comment.user}</span>
+                          <span className="comment-date">
+                            {formatDate(comment.date)}
+                          </span>
+                        </div>
+                        <div className="comment-text">{comment.text}</div>
+                        <div className="comment-actions">
+                          <button className="like-button">
+                            👍 {comment.likes}
+                          </button>
+                          <button className="reply-button">
+                            Responder
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
                 
                 <div className="comment-form">
-                  <textarea placeholder="Deixe seu comentário ou dúvida..."></textarea>
-                  <button>Enviar Comentário</button>
+                  <form onSubmit={handleAddComment}>
+                    <textarea 
+                      placeholder="Deixe seu comentário ou dúvida..."
+                      value={newComment}
+                      onChange={(e) => setNewComment(e.target.value)}
+                    ></textarea>
+                    <button type="submit" disabled={!newComment.trim()}>
+                      Enviar Comentário
+                    </button>
+                  </form>
                 </div>
               </div>
             )}
@@ -240,7 +380,7 @@ const Lesson = () => {
           
           {!currentLesson.completed && (
             <button 
-              onClick={() => console.log('Marcar como concluída:', currentLesson.id)}
+              onClick={handleVideoEnd}
               className="btn-complete"
             >
               Marcar como Concluída
@@ -248,31 +388,31 @@ const Lesson = () => {
           )}
         </div>
       </div>
-
-<div className="lesson-sidebar">
-  <div className="module-title">{currentModule.title}</div>
-  
-  {currentCourse.modules.map((module: any) => (
-    <div key={module.id} className="sidebar-module">
-      <div className="sidebar-module-title">
-        {module.title}
-      </div>
       
-      <div className="sidebar-lessons">
-        {module.lessons.map((lessonItem: any) => (
-          <div
-            key={lessonItem.id}
-            className={`sidebar-lesson ${lessonItem.id === currentLesson.id ? 'active' : ''} ${lessonItem.completed ? 'completed' : ''}`}
-            onClick={() => navigate(`/lesson/${courseId}/${module.id}/${lessonItem.id}`)}
-          >
-            <span className="lesson-title">{lessonItem.title}</span>
-            {lessonItem.completed && <span className="lesson-status">✓</span>}
+      <div className="lesson-sidebar">
+        <div className="module-title">{currentModule.title}</div>
+        
+        {currentCourse.modules.map(module => (
+          <div key={module.id} className="sidebar-module">
+            <div className="sidebar-module-title">
+              {module.title}
+            </div>
+            
+            <div className="sidebar-lessons">
+              {module.lessons.map(lesson => (
+                <div
+                  key={lesson.id}
+                  className={`sidebar-lesson ${lesson.id === currentLesson.id ? 'active' : ''} ${lesson.completed ? 'completed' : ''}`}
+                  onClick={() => navigate(`/lesson/${courseId}/${module.id}/${lesson.id}`)}
+                >
+                  <span className="lesson-title">{lesson.title}</span>
+                  {lesson.completed && <span className="lesson-status">✓</span>}
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>
-    </div>
-  ))}
-</div>
     </div>
   );
 };

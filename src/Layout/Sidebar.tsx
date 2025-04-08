@@ -1,3 +1,4 @@
+// src/Layout/Sidebar.tsx (com melhorias)
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import clsx from 'clsx';
@@ -18,10 +19,10 @@ interface SidebarProps {
 }
 
 const navItems = [
-  { to: '/dashboard', icon: IconHouseSolid, label: 'Dashboard' },
-  { to: '/courses', icon: IconBookSolid, label: 'Cursos' },
-  { to: '/admin/analytics', icon: IconChart, label: 'Analytics' },
-  { to: '/support/faq', icon: IconCircleInfo, label: 'Ajuda' },
+  { to: '/dashboard', icon: IconHouseSolid, label: 'Dashboard', color: '#3b82f6' }, // Azul
+  { to: '/courses', icon: IconBookSolid, label: 'Cursos', color: '#10b981' },      // Verde
+  { to: '/admin/analytics', icon: IconChart, label: 'Analytics', color: '#f59e0b' }, // Amarelo
+  { to: '/support/faq', icon: IconCircleInfo, label: 'Ajuda', color: '#ef4444' },   // Vermelho
 ];
 
 const Sidebar = ({ mobileOpen, collapsed, onToggleCollapse }: SidebarProps) => {
@@ -32,23 +33,35 @@ const Sidebar = ({ mobileOpen, collapsed, onToggleCollapse }: SidebarProps) => {
 
   return (
     <div className={sidebarClass}>
-      {!mobileOpen && (
-        <div className="collapse-toggle">
-          <button className={`toggle-btn ${collapsed ? 'rotated' : ''}`} onClick={onToggleCollapse}>
-            <img
-              src={collapsed ? IconExpand : IconCollapse}
-              alt="Toggle Sidebar"
-              className="icon-toggle"
-            />
-          </button>
-        </div>
-      )}
+   {!mobileOpen && (
+  <div className="collapse-toggle">
+    <button 
+      className={`toggle-btn ${collapsed ? 'rotated' : ''}`} 
+      onClick={onToggleCollapse}
+      aria-label={collapsed ? "Expandir menu" : "Recolher menu"}
+    >
+      <div className="hamburger-container">
+        <span className="hamburger-line"></span>
+        <span className="hamburger-line"></span>
+        <span className="hamburger-line"></span>
+      </div>
+    </button>
+  </div>
+)}
 
       <ul className="menu">
-        {navItems.map(({ to, icon, label }) => (
+        {navItems.map(({ to, icon, label, color }) => (
           <li key={to}>
-            <NavLink to={to} className="link" data-label={label}>
-              <img src={icon} alt={label} className="icon" />
+            <NavLink 
+              to={to} 
+              className={({ isActive }) => 
+                clsx("link", { "active": isActive })} 
+              data-label={label}
+              style={{ "--menu-item-color": color } as React.CSSProperties}
+            >
+              <div className="icon-container">
+                <img src={icon} alt={label} className="icon" />
+              </div>
               {!collapsed && <span>{label}</span>}
             </NavLink>
           </li>

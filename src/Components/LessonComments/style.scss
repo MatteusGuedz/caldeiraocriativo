@@ -1,53 +1,222 @@
+// src/Components/LessonComments/style.scss
+@import '../../SCSS/_variables.scss';
+
 .lesson-comments {
-    margin-top: 2rem;
-    padding: 1.5rem;
-    background: #111827;
-    border-radius: 10px;
+  padding: 20px 0;
   
-    h3 {
-      margin-bottom: 1rem;
-      color: #ffffff; // Texto escuro (cinza/preto)
+  .section-title {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+  
+  .comment-form, .reply-form {
+    display: flex;
+    margin-bottom: 30px;
+    gap: 15px;
+    
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
-  
-    form {
+    
+    form, .reply-input {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
-  
+      
       textarea {
-        resize: vertical;
+        width: 100%;
         min-height: 80px;
-        padding: 0.75rem;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        font-size: 0.95rem;
-      }
-  
-      button {
-        align-self: flex-start;
-        background: #1f2937;
+        background-color: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
         color: white;
-        padding: 0.5rem 1rem;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-  
-        &:hover {
-          background: #111827;
+        padding: 12px 15px;
+        margin-bottom: 10px;
+        resize: vertical;
+        font-family: inherit;
+        
+        &:focus {
+          outline: none;
+          border-color: $accent-color;
+        }
+        
+        &::placeholder {
+          color: rgba(255, 255, 255, 0.5);
         }
       }
-    }
-  
-    .comment-list {
-      margin-top: 1.5rem;
-  
-      .comment {
-        background: white;
-        padding: 0.75rem 1rem;
+      
+      button {
+        align-self: flex-end;
+        background-color: $accent-color;
+        color: white;
+        border: none;
         border-radius: 6px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        margin-bottom: 0.75rem;
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        
+        &:hover {
+          background-color: darken($accent-color, 10%);
+        }
+        
+        &:disabled {
+          background-color: rgba(255, 255, 255, 0.2);
+          cursor: not-allowed;
+        }
       }
     }
   }
   
+  .reply-form {
+    margin-left: 40px;
+    margin-bottom: 20px;
+    
+    .reply-input {
+      textarea {
+        min-height: 60px;
+      }
+      
+      .reply-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        
+        .cancel-button {
+          background-color: transparent;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          
+          &:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+          }
+        }
+      }
+    }
+  }
+  
+  .comments-list {
+    .no-comments {
+      text-align: center;
+      padding: 30px;
+      color: rgba(255, 255, 255, 0.6);
+      font-style: italic;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+    }
+    
+    .comment-thread {
+      margin-bottom: 25px;
+    }
+    
+    .comment {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+      
+      &.reply {
+        margin-left: 40px;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 15px;
+        border-radius: 8px;
+      }
+      
+      .comment-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        flex-shrink: 0;
+        
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+      
+      .comment-content {
+        flex: 1;
+        
+        .comment-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 5px;
+          
+          .comment-user {
+            font-weight: 600;
+            color: white;
+          }
+          
+          .comment-date {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+          }
+        }
+        
+        .comment-text {
+          margin-bottom: 10px;
+          line-height: 1.5;
+        }
+        
+        .comment-actions {
+          display: flex;
+          gap: 15px;
+          
+          button {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            
+            &:hover {
+              background: rgba(255, 255, 255, 0.1);
+              color: white;
+            }
+            
+            &.liked {
+              color: $accent-color;
+            }
+          }
+        }
+      }
+    }
+    
+    .replies {
+      margin-left: 20px;
+      border-left: 2px solid rgba(255, 255, 255, 0.1);
+      padding-left: 20px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .lesson-comments {
+    .comment, .reply-form {
+      margin-left: 0 !important;
+    }
+    
+    .replies {
+      margin-left: 10px;
+      padding-left: 10px;
+    }
+  }
+}
