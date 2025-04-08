@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import './CourseBanner.scss';
 import bannerBg from '../../Assets/images/banner.png';
 
+
 interface BannerSlide {
   title: string;
   description: string;
@@ -15,7 +16,7 @@ const bannerSlides: BannerSlide[] = [
   {
     title: "Comece sua jornada criativa",
     description: "Descubra cursos incríveis e desenvolva novas habilidades com a gente.",
-    image: bannerBg,
+    image:'../../Assets/images/urso.jpg',
     buttonText: "Comece agora!",
     buttonLink: "/courses"
   },

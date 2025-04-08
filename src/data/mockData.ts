@@ -1,4 +1,5 @@
 // src/data/mockData.ts
+
 export const mockCourseDetails = {
     1: {
       id: 1,

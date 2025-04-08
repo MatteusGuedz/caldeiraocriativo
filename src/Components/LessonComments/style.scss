@@ -1,14 +1,8 @@
 // src/Components/LessonComments/style.scss
-@import '../../SCSS/_variables.scss';
+// Atualização específica para os avatares dos comentários
 
 .lesson-comments {
-  padding: 20px 0;
-  
-  .section-title {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    font-weight: 600;
-  }
+  // ... código existente ...
   
   .comment-form, .reply-form {
     display: flex;
@@ -16,207 +10,68 @@
     gap: 15px;
     
     .user-avatar {
-      width: 40px;
-      height: 40px;
+      width: 40px;  // Tamanho fixo
+      height: 40px;  // Tamanho fixo
       border-radius: 50%;
       overflow: hidden;
-      flex-shrink: 0;
+      flex-shrink: 0;  // Impede que o avatar encolha
       
       img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: cover;  // Mantém proporção da imagem
+        max-width: 100%;  // Garante que não ultrapasse o container
       }
     }
     
-    form, .reply-input {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      
-      textarea {
-        width: 100%;
-        min-height: 80px;
-        background-color: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-        color: white;
-        padding: 12px 15px;
-        margin-bottom: 10px;
-        resize: vertical;
-        font-family: inherit;
-        
-        &:focus {
-          outline: none;
-          border-color: $accent-color;
-        }
-        
-        &::placeholder {
-          color: rgba(255, 255, 255, 0.5);
-        }
-      }
-      
-      button {
-        align-self: flex-end;
-        background-color: $accent-color;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        padding: 8px 16px;
-        font-size: 0.9rem;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        
-        &:hover {
-          background-color: darken($accent-color, 10%);
-        }
-        
-        &:disabled {
-          background-color: rgba(255, 255, 255, 0.2);
-          cursor: not-allowed;
-        }
-      }
-    }
-  }
-  
-  .reply-form {
-    margin-left: 40px;
-    margin-bottom: 20px;
-    
-    .reply-input {
-      textarea {
-        min-height: 60px;
-      }
-      
-      .reply-actions {
-        display: flex;
-        justify-content: flex-end;
-        gap: 10px;
-        
-        .cancel-button {
-          background-color: transparent;
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          
-          &:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-          }
-        }
-      }
-    }
+    // ... restante do código ...
   }
   
   .comments-list {
-    .no-comments {
-      text-align: center;
-      padding: 30px;
-      color: rgba(255, 255, 255, 0.6);
-      font-style: italic;
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 8px;
-    }
-    
-    .comment-thread {
-      margin-bottom: 25px;
-    }
+    // ... código existente ...
     
     .comment {
       display: flex;
       gap: 15px;
       margin-bottom: 15px;
       
-      &.reply {
-        margin-left: 40px;
-        background: rgba(255, 255, 255, 0.03);
-        padding: 15px;
-        border-radius: 8px;
-      }
-      
       .comment-avatar {
-        width: 40px;
-        height: 40px;
+        width: 40px;  // Tamanho fixo e padronizado
+        height: 40px;  // Tamanho fixo e padronizado
+        min-width: 40px;  // Garante largura mínima
+        min-height: 40px;  // Garante altura mínima
         border-radius: 50%;
         overflow: hidden;
-        flex-shrink: 0;
+        flex-shrink: 0;  // Impede que o avatar encolha
         
         img {
           width: 100%;
           height: 100%;
-          object-fit: cover;
+          object-fit: cover;  // Mantém proporção da imagem
+          max-width: 100%;  // Garante que não ultrapasse o container
         }
       }
       
-      .comment-content {
-        flex: 1;
-        
-        .comment-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 5px;
-          
-          .comment-user {
-            font-weight: 600;
-            color: white;
-          }
-          
-          .comment-date {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.5);
-          }
-        }
-        
-        .comment-text {
-          margin-bottom: 10px;
-          line-height: 1.5;
-        }
-        
-        .comment-actions {
-          display: flex;
-          gap: 15px;
-          
-          button {
-            background: none;
-            border: none;
-            color: rgba(255, 255, 255, 0.6);
-            cursor: pointer;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            padding: 5px 10px;
-            border-radius: 4px;
-            transition: all 0.2s ease;
-            
-            &:hover {
-              background: rgba(255, 255, 255, 0.1);
-              color: white;
-            }
-            
-            &.liked {
-              color: $accent-color;
-            }
-          }
-        }
-      }
-    }
-    
-    .replies {
-      margin-left: 20px;
-      border-left: 2px solid rgba(255, 255, 255, 0.1);
-      padding-left: 20px;
+      // ... restante do código ...
     }
   }
 }
 
-@media (max-width: 768px) {
+// Adicione regras responsivas para telas menores
+@media (max-width: 576px) {
   .lesson-comments {
-    .comment, .reply-form {
-      margin-left: 0 !important;
+    .comment-form, .reply-form {
+      .user-avatar {
+        width: 32px;  // Tamanho menor para telas pequenas
+        height: 32px;  // Tamanho menor para telas pequenas
+      }
     }
     
-    .replies {
-      margin-left: 10px;
-      padding-left: 10px;
+    .comments-list .comment .comment-avatar {
+      width: 32px;  // Tamanho menor para telas pequenas
+      height: 32px;  // Tamanho menor para telas pequenas
+      min-width: 32px;
+      min-height: 32px;
     }
   }
 }
