@@ -5,14 +5,17 @@ import CourseBanner from '../../Components/CourseBanner';
 import CourseCard from '../../Components/CourseCard';
 import { useUserProgress } from '../../hooks/useUserProgress';
 import { useAchievements } from '../../hooks/useAchievements';
+import ImagemCapa from '../../Assets/images/capa-exemple.jpeg';
 import './Dashboard.scss';
 
 // Mockup de dados dos cursos (que virão da API no futuro)
+
+//fotos do dashboard cursos, capa, 
 const inProgressCourses = [
   {
     id: 1,
     title: 'Introdução à Criatividade com IA',
-    image: 'https://placehold.co/600x400/0f172a/white?text=Criatividade+com+IA',
+    image: ImagemCapa,
     progress: 30,
     lessonCount: 12,
     nextLesson: { id: 103, moduleId: 1, title: 'Como estimular sua criatividade' },
@@ -20,7 +23,7 @@ const inProgressCourses = [
   {
     id: 3,
     title: 'Criatividade na Prática',
-    image: 'https://placehold.co/600x400/0f172a/white?text=Criatividade+Prática',
+    image: ImagemCapa,
     progress: 75,
     lessonCount: 10,
     nextLesson: { id: 402, moduleId: 4, title: 'Técnicas de escrita livre' },
@@ -31,7 +34,7 @@ const recommendedCourses = [
   {
     id: 2,
     title: 'Design Thinking Avançado',
-    image: 'https://placehold.co/600x400/1e293b/white?text=Design+Thinking',
+    image: ImagemCapa,
     available: false,
     isPopular: true,
     lessonCount: 8,
@@ -40,7 +43,7 @@ const recommendedCourses = [
   {
     id: 4,
     title: 'Criatividade para Negócios',
-    image: 'https://placehold.co/600x400/1e293b/white?text=Negócios',
+    image: ImagemCapa,
     available: true,
     isNew: true,
     lessonCount: 6,

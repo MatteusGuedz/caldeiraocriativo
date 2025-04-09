@@ -16,7 +16,7 @@ const bannerSlides: BannerSlide[] = [
   {
     title: "Comece sua jornada criativa",
     description: "Descubra cursos incríveis e desenvolva novas habilidades com a gente.",
-    image:'../../Assets/images/urso.jpg',
+    image:bannerBg ,
     buttonText: "Comece agora!",
     buttonLink: "/courses"
   },

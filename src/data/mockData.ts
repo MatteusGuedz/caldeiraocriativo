@@ -1,11 +1,12 @@
 // src/data/mockData.ts
+import ImgCapa1 from '../Assets/images/capa-exemple.jpeg';
 
 export const mockCourseDetails = {
     1: {
       id: 1,
       title: 'Introdução à Criatividade com IA',
       description: 'Aprenda a desenvolver sua criatividade usando IA como ferramenta potencializadora. Neste curso, você descobrirá como utilizar ferramentas de inteligência artificial para expandir seus horizontes criativos e produzir conteúdo inovador.',
-      image: 'https://placehold.co/600x400/0f172a/white?text=Criatividade+com+IA',
+      image: '../Assets/images/capa-exemple.jpeg',
       available: true,
       progress: 30,
       totalLessons: 12,
@@ -64,7 +65,7 @@ export const mockCourseDetails = {
       id: 2,
       title: 'Design Thinking Avançado',
       description: 'Metodologias avançadas de Design Thinking para projetos criativos. Aprenda a aplicar técnicas de empatia, ideação e prototipagem rápida em projetos reais.',
-      image: 'https://placehold.co/600x400/1e293b/white?text=Design+Thinking',
+      image: ImgCapa1,
       available: false,
       progress: 0,
       totalLessons: 8,
@@ -96,7 +97,7 @@ export const mockCourseDetails = {
       id: 3,
       title: 'Criatividade na Prática',
       description: 'Exercícios práticos para estimular sua criatividade diariamente. Este curso é ideal para quem quer desenvolver uma rotina criativa e superar bloqueios.',
-      image: 'https://placehold.co/600x400/0f172a/white?text=Criatividade+Prática',
+      image: ImgCapa1,
       available: true,
       progress: 75,
       totalLessons: 10,
@@ -131,21 +132,21 @@ export const mockCourseDetails = {
       id: 1,
       title: 'Introdução à Criatividade com IA',
       description: 'Aprenda a desenvolver sua criatividade usando IA como ferramenta potencializadora.',
-      image: 'https://placehold.co/600x400/0f172a/white?text=Criatividade+com+IA',
+      image: ImgCapa1,
       available: true,
     },
     {
       id: 2,
       title: 'Design Thinking Avançado',
       description: 'Metodologias avançadas de Design Thinking para projetos criativos.',
-      image: 'https://placehold.co/600x400/1e293b/white?text=Design+Thinking',
+      image:  ImgCapa1,
       available: false,
     },
     {
       id: 3,
       title: 'Criatividade na Prática',
       description: 'Exercícios práticos para estimular sua criatividade diariamente.',
-      image: 'https://placehold.co/600x400/0f172a/white?text=Criatividade+Prática',
+      image:  ImgCapa1,
       available: true,
     }
   ];

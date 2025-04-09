@@ -13,8 +13,8 @@ interface CommentProps {
   replies?: CommentProps[];
 }
 
-const LessonComments = () => {
-  const { courseId, lessonId } = useParams();
+const LessonComments: React.FC = () => {
+  const { courseId, lessonId } = useParams<{ courseId: string; lessonId: string }>();
   const [comments, setComments] = useState<CommentProps[]>([]);
   const [newComment, setNewComment] = useState('');
   const [replyingTo, setReplyingTo] = useState<number | null>(null);
@@ -22,49 +22,55 @@ const LessonComments = () => {
   
   useEffect(() => {
     // Carregar comentários do localStorage ou dados mockados
-    const savedComments = localStorage.getItem(`comments_${courseId}_${lessonId}`);
-    if (savedComments) {
-      setComments(JSON.parse(savedComments));
-    } else {
-      // Comentários mockados com estrutura aninhada de respostas
-      const mockComments = [
-        { 
-          id: 1, 
-          user: 'Ana Silva', 
-          userAvatar: 'https://randomuser.me/api/portraits/women/44.jpg',
-          text: 'Adorei essa aula! Muito bem explicada.', 
-          date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-          likes: 3,
-          replies: []
-        },
-        { 
-          id: 2, 
-          user: 'Carlos Oliveira',
-          userAvatar: 'https://randomuser.me/api/portraits/men/32.jpg',
-          text: 'Tenho uma dúvida sobre o exercício proposto. Alguém pode me ajudar?', 
-          date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-          likes: 1,
-          replies: [
-            {
-              id: 3,
-              user: 'Maria Eduarda',
-              userAvatar: 'https://randomuser.me/api/portraits/women/22.jpg',
-              text: 'Carlos, acho que você precisa aplicar o conceito de brainstorming que foi explicado no minuto 5:30.',
-              date: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(),
-              likes: 2
-            }
-          ]
-        }
-      ];
-      setComments(mockComments);
-      localStorage.setItem(`comments_${courseId}_${lessonId}`, JSON.stringify(mockComments));
+    const loadComments = () => {
+      const savedComments = localStorage.getItem(`comments_${courseId}_${lessonId}`);
+      if (savedComments) {
+        setComments(JSON.parse(savedComments));
+      } else {
+        // Comentários mockados com estrutura aninhada de respostas
+        const mockComments = [
+          { 
+            id: 1, 
+            user: 'Ana Silva', 
+            userAvatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+            text: 'Adorei essa aula! Muito bem explicada.', 
+            date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+            likes: 3,
+            replies: []
+          },
+          { 
+            id: 2, 
+            user: 'Carlos Oliveira',
+            userAvatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+            text: 'Tenho uma dúvida sobre o exercício proposto. Alguém pode me ajudar?', 
+            date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+            likes: 1,
+            replies: [
+              {
+                id: 3,
+                user: 'Maria Eduarda',
+                userAvatar: 'https://randomuser.me/api/portraits/women/22.jpg',
+                text: 'Carlos, acho que você precisa aplicar o conceito de brainstorming que foi explicado no minuto 5:30.',
+                date: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(),
+                likes: 2
+              }
+            ]
+          }
+        ];
+        setComments(mockComments);
+        localStorage.setItem(`comments_${courseId}_${lessonId}`, JSON.stringify(mockComments));
+      }
+    };
+
+    if (courseId && lessonId) {
+      loadComments();
     }
   }, [courseId, lessonId]);
 
   const handleAddComment = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!newComment.trim()) return;
+    if (!newComment.trim() || !courseId || !lessonId) return;
     
     // Criar novo comentário
     const newCommentObj = {
@@ -89,7 +95,7 @@ const LessonComments = () => {
   };
   
   const handleAddReply = (commentId: number) => {
-    if (!replyText.trim()) return;
+    if (!replyText.trim() || !courseId || !lessonId) return;
     
     // Criar nova resposta
     const newReply = {
@@ -147,7 +153,9 @@ const LessonComments = () => {
     }
     
     setComments(updatedComments);
-    localStorage.setItem(`comments_${courseId}_${lessonId}`, JSON.stringify(updatedComments));
+    if (courseId && lessonId) {
+      localStorage.setItem(`comments_${courseId}_${lessonId}`, JSON.stringify(updatedComments));
+    }
   };
   
   const formatDate = (dateString: string): string => {
@@ -170,11 +178,11 @@ const LessonComments = () => {
   };
 
   return (
-    <div className="lesson-comments">
-      <h3 className="section-title">Comentários ({comments.length})</h3>
+    <div className="lesson-comments-container">
+      <h3 className="comments-title">Comentários ({comments.length})</h3>
       
-      <div className="comment-form main-form">
-        <div className="user-avatar">
+      <div className="new-comment-form">
+        <div className="avatar-container">
           <img src="https://randomuser.me/api/portraits/lego/1.jpg" alt="Seu avatar" />
         </div>
         <form onSubmit={handleAddComment}>
@@ -197,21 +205,19 @@ const LessonComments = () => {
         ) : (
           comments.map(comment => (
             <div key={comment.id} className="comment-thread">
-              <div className="comment">
-                <div className="comment-avatar">
+              <div className="comment-item">
+                <div className="avatar-container">
                   <img src={comment.userAvatar} alt={comment.user} />
                 </div>
-                <div className="comment-content">
+                <div className="comment-body">
                   <div className="comment-header">
-                    <span className="comment-user">{comment.user}</span>
-                    <span className="comment-date">
-                      {formatDate(comment.date)}
-                    </span>
+                    <div className="user-name">{comment.user}</div>
+                    <div className="comment-time">{formatDate(comment.date)}</div>
                   </div>
                   <div className="comment-text">{comment.text}</div>
                   <div className="comment-actions">
                     <button 
-                      className={`like-button`} 
+                      className="like-button" 
                       onClick={() => handleLike(comment.id)}
                     >
                       <span className="like-icon">👍</span> 
@@ -230,10 +236,10 @@ const LessonComments = () => {
               {/* Formulário de resposta */}
               {replyingTo === comment.id && (
                 <div className="reply-form">
-                  <div className="user-avatar">
+                  <div className="avatar-container">
                     <img src="https://randomuser.me/api/portraits/lego/1.jpg" alt="Seu avatar" />
                   </div>
-                  <div className="reply-input">
+                  <div className="reply-input-container">
                     <textarea 
                       placeholder={`Respondendo para ${comment.user}...`}
                       value={replyText}
@@ -265,21 +271,19 @@ const LessonComments = () => {
               {comment.replies && comment.replies.length > 0 && (
                 <div className="replies">
                   {comment.replies.map(reply => (
-                    <div key={reply.id} className="comment reply">
-                      <div className="comment-avatar">
+                    <div key={reply.id} className="reply-item">
+                      <div className="avatar-container">
                         <img src={reply.userAvatar} alt={reply.user} />
                       </div>
-                      <div className="comment-content">
+                      <div className="comment-body">
                         <div className="comment-header">
-                          <span className="comment-user">{reply.user}</span>
-                          <span className="comment-date">
-                            {formatDate(reply.date)}
-                          </span>
+                          <div className="user-name">{reply.user}</div>
+                          <div className="comment-time">{formatDate(reply.date)}</div>
                         </div>
                         <div className="comment-text">{reply.text}</div>
                         <div className="comment-actions">
                           <button 
-                            className={`like-button`} 
+                            className="like-button" 
                             onClick={() => handleLike(reply.id, true, comment.id)}
                           >
                             <span className="like-icon">👍</span> 

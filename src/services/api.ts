@@ -1,5 +1,5 @@
 // src/services/api.ts
-import imgUrso from '../Assets/images/urso.jpg';
+import imgUrso from '../Assets/images/capa-exemple.jpeg';
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 
 // Simulação de API para desenvolvimento
