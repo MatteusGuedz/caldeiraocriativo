@@ -1,0 +1,122 @@
+@import '../../../SCSS/_variables.scss';
+
+.admin-analytics-page {
+  padding: 2rem;
+
+  .analytics-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    h1 {
+      font-size: 2rem;
+      color: $text-primary;
+      margin: 0;
+    }
+
+    .time-range-selector {
+      display: flex;
+      gap: 0.5rem;
+
+      button {
+        padding: 0.5rem 1rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: none;
+        color: $text-secondary;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.1);
+        }
+
+        &.active {
+          background: $accent-color;
+          color: white;
+        }
+      }
+    }
+  }
+
+  .analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1.5rem;
+
+    .analytics-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+      h2 {
+        margin-top: 0;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        color: $text-primary;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 0.5rem;
+      }
+    }
+
+    .user-engagement {
+      .engagement-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 1rem;
+        text-align: center;
+
+        .stat {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 1rem;
+          background: rgba(255, 255, 255, 0.03);
+          border-radius: 8px;
+
+          .stat-label {
+            color: $text-secondary;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+          }
+
+          .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: $text-primary;
+          }
+        }
+      }
+    }
+  }
+
+  .loading, .error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: $text-secondary;
+    font-size: 1.2rem;
+  }
+
+  @media (max-width: $tablet) {
+    padding: 1rem;
+
+    .analytics-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+
+      .time-range-selector {
+        width: 100%;
+        overflow-x: auto;
+      }
+    }
+
+    .analytics-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}

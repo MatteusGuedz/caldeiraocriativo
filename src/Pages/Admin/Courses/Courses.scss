@@ -1,0 +1,305 @@
+@import '../../../SCSS/_variables.scss';
+
+.admin-courses {
+  .courses-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    h1 {
+      font-size: 1.875rem;
+      font-weight: 600;
+      color: #1e293b;
+      margin: 0;
+    }
+
+    .btn-primary {
+      background: #3b82f6;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      border: none;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background: #2563eb;
+      }
+    }
+  }
+
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    font-size: 1.125rem;
+    color: #64748b;
+  }
+
+  .courses-table {
+    background: white;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      th, td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      th {
+        background: #f8fafc;
+        font-weight: 500;
+        color: #64748b;
+        font-size: 0.875rem;
+      }
+
+      td {
+        color: #1e293b;
+      }
+
+      .course-info {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+
+        .course-thumbnail {
+          width: 4rem;
+          height: 3rem;
+          border-radius: 0.375rem;
+          object-fit: cover;
+        }
+
+        .course-details {
+          .course-title {
+            font-weight: 500;
+            color: #1e293b;
+          }
+
+          .course-description {
+            font-size: 0.875rem;
+            color: #64748b;
+            max-width: 300px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+
+      .course-status {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 500;
+
+        &.available {
+          background: #dcfce7;
+          color: #166534;
+        }
+
+        &.unavailable {
+          background: #f1f5f9;
+          color: #64748b;
+        }
+      }
+
+      .actions {
+        display: flex;
+        gap: 0.5rem;
+
+        button {
+          padding: 0.5rem;
+          border: none;
+          border-radius: 0.375rem;
+          cursor: pointer;
+          transition: all 0.2s;
+
+          &.edit {
+            background: #f1f5f9;
+            color: #3b82f6;
+
+            &:hover {
+              background: #e2e8f0;
+            }
+          }
+
+          &.delete {
+            background: #fee2e2;
+            color: #ef4444;
+
+            &:hover {
+              background: #fecaca;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Course Modal Styles
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .course-modal {
+    background: white;
+    border-radius: 0.5rem;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+                0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid #e2e8f0;
+
+      h2 {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #1e293b;
+      }
+
+      .close-button {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: #64748b;
+        cursor: pointer;
+        padding: 0.25rem;
+        line-height: 1;
+
+        &:hover {
+          color: #1e293b;
+        }
+      }
+    }
+
+    form {
+      padding: 1.5rem;
+
+      .form-group {
+        margin-bottom: 1.25rem;
+
+        label {
+          display: block;
+          font-size: 0.875rem;
+          font-weight: 500;
+          color: #64748b;
+          margin-bottom: 0.5rem;
+        }
+
+        input, textarea, select {
+          width: 100%;
+          padding: 0.625rem;
+          border: 1px solid #e2e8f0;
+          border-radius: 0.375rem;
+          font-size: 0.875rem;
+          color: #1e293b;
+          transition: all 0.2s;
+
+          &:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 1px #3b82f6;
+          }
+
+          &.error {
+            border-color: #ef4444;
+          }
+        }
+
+        textarea {
+          resize: vertical;
+          min-height: 100px;
+        }
+
+        .error-message {
+          font-size: 0.75rem;
+          color: #ef4444;
+          margin-top: 0.25rem;
+        }
+
+        .image-preview {
+          margin-top: 0.75rem;
+          
+          img {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 0.375rem;
+            object-fit: cover;
+          }
+        }
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+
+      .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid #e2e8f0;
+
+        button {
+          padding: 0.625rem 1.25rem;
+          border-radius: 0.375rem;
+          font-size: 0.875rem;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.2s;
+
+          &.btn-secondary {
+            background: white;
+            border: 1px solid #e2e8f0;
+            color: #64748b;
+
+            &:hover {
+              background: #f8fafc;
+              border-color: #cbd5e1;
+            }
+          }
+
+          &.btn-primary {
+            background: #3b82f6;
+            border: none;
+            color: white;
+
+            &:hover {
+              background: #2563eb;
+            }
+          }
+        }
+      }
+    }
+  }
+}
