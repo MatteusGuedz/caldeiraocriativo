@@ -1,4 +1,3 @@
-// src/App.tsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './SCSS/style.scss';
@@ -12,6 +11,7 @@ import Login from './Pages/Auth/Login';
 import Register from './Pages/Auth/Register';
 import NotFound from './Pages/Erros/NotFound';
 import Profile from './Pages/Profile';
+import Analytics from './Pages/Admin/Analytics';
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         
-        {/* Temporariamente tornando todas as rotas públicas para testes */}
+        {/* Rotas protegidas */}
         <Route element={<MainLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/courses" element={<CourseList />} />
@@ -30,16 +30,9 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           
           {/* Rotas de admin */}
-          <Route path="/admin/analytics" element={<div>Analytics</div>} />
-          <Route path="/admin/upload" element={<div>Upload de Aulas</div>} />
-          
-          {/* Rotas de suporte */}
-          <Route path="/support/feedback" element={<div>Feedback</div>} />
-          <Route path="/support/faq" element={<div>FAQ</div>} />
+          <Route path="/admin/analytics" element={<Analytics />} />
           
           {/* Rotas adicionais */}
-          <Route path="/onboarding" element={<div>Onboarding</div>} />
-          <Route path="/payment" element={<div>Checkout</div>} />
           <Route path="/" element={<CourseList />} />
         </Route>
         

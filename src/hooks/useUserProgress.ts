@@ -9,6 +9,11 @@ export interface UserProgress {
   totalCoursesCompleted: number;
   totalLessonsCompleted: number;
   lastActive: string;
+  user?: {
+    name: string;
+    email: string;
+    avatar?: string;
+  };
 }
 
 const defaultProgress: UserProgress = {
@@ -18,8 +23,14 @@ const defaultProgress: UserProgress = {
   totalCoursesStarted: 0,
   totalCoursesCompleted: 0,
   totalLessonsCompleted: 0,
-  lastActive: new Date().toISOString()
+  lastActive: new Date().toISOString(),
+  user: {
+    name: 'Usuário',
+    email: 'usuario@exemplo.com'
+  }
 };
+
+// Resto do código permanece o mesmo...
 
 // Calcular o XP necessário para um certo nível
 const calculateXpForLevel = (level: number): number => {
