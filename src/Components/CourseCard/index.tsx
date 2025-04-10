@@ -1,8 +1,7 @@
 // src/Components/CourseCard/index.tsx
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import './CourseCard.scss';
-
 
 interface CourseCardProps {
   id: number;
@@ -65,4 +64,18 @@ const CourseCard: React.FC<CourseCardProps> = ({
   );
 };
 
-export default CourseCard;
+// Memoize the component to prevent unnecessary re-renders
+export default memo(CourseCard, (prevProps, nextProps) => {
+  // Custom comparison function to determine if the component should re-render
+  return (
+    prevProps.id === nextProps.id &&
+    prevProps.title === nextProps.title &&
+    prevProps.image === nextProps.image &&
+    prevProps.available === nextProps.available &&
+    prevProps.isNew === nextProps.isNew &&
+    prevProps.isPopular === nextProps.isPopular &&
+    prevProps.progress === nextProps.progress &&
+    prevProps.lessonCount === nextProps.lessonCount &&
+    prevProps.duration === nextProps.duration
+  );
+});
