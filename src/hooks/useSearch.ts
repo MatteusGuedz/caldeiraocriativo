@@ -1,6 +1,6 @@
 // src/hooks/useSearch.ts
-import { useState, useEffect } from 'react';
-import { mockCourses, mockCourseDetails } from '../data/mockData';
+import { useState } from 'react';
+import {  mockCourseDetails } from '../data/mockData';
 
 export interface SearchResult {
   id: number;

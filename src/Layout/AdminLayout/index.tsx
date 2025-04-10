@@ -6,9 +6,9 @@ import './AdminLayout.scss';
 
 const AdminLayout: React.FC = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-
+  
   const toggleSidebar = () => {
-    setSidebarCollapsed(prev => !prev);
+    setSidebarCollapsed(!sidebarCollapsed);
   };
 
   return (

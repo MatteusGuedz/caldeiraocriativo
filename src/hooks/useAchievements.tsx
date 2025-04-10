@@ -24,7 +24,16 @@ const defaultAchievements: Achievement[] = [
   // ... outros achievements
 ];
 
-export function useAchievements() {
+interface AchievementsContextData {
+  achievements: Achievement[];
+  loading: boolean;
+  updateAchievementProgress: (achievementId: number, progressIncrement?: number) => void;
+  unlockAchievement: (achievementId: number) => void;
+}
+
+const AchievementsContext = createContext<AchievementsContextData>({} as AchievementsContextData);
+
+export const AchievementsProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [achievements, setAchievements] = useState<Achievement[]>([]);
   const [loading, setLoading] = useState(true);
   
@@ -98,10 +107,26 @@ export function useAchievements() {
     });
   };
 
-  return {
-    achievements,
-    loading,
-    updateAchievementProgress,
-    unlockAchievement
-  };
+  return (
+    <AchievementsContext.Provider
+      value={{
+        achievements,
+        loading,
+        updateAchievementProgress,
+        unlockAchievement
+      }}
+    >
+      {children}
+    </AchievementsContext.Provider>
+  );
+};
+
+export function useAchievements(): AchievementsContextData {
+  const context = useContext(AchievementsContext);
+  
+  if (!context) {
+    throw new Error('useAchievements deve ser usado dentro de um AchievementsProvider');
+  }
+  
+  return context;
 }

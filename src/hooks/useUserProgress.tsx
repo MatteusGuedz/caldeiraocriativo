@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
 
 export interface UserProgress {
   level: number;
@@ -30,15 +30,23 @@ const defaultProgress: UserProgress = {
   }
 };
 
-
-
-
-
 const calculateXpForLevel = (level: number): number => {
   return Math.floor(100 * Math.pow(1.5, level - 1));
 };
 
-export function useUserProgress() {
+interface UserProgressContextData {
+  userProgress: UserProgress;
+  loading: boolean;
+  addXp: (amount: number) => void;
+  completeLesson: (courseId: number, lessonId: number) => void;
+  startCourse: (courseId: number) => void;
+  completeCourse: (courseId: number) => void;
+  updateLastActive: () => void;
+}
+
+const UserProgressContext = createContext<UserProgressContextData>({} as UserProgressContextData);
+
+export const UserProgressProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [userProgress, setUserProgress] = useState<UserProgress>(defaultProgress);
   const [loading, setLoading] = useState(true);
   
@@ -160,13 +168,29 @@ export function useUserProgress() {
     }
   };
 
-  return {
-    userProgress,
-    loading,
-    addXp,
-    completeLesson,
-    startCourse,
-    completeCourse,
-    updateLastActive
-  };
+  return (
+    <UserProgressContext.Provider 
+      value={{ 
+        userProgress, 
+        loading, 
+        addXp, 
+        completeLesson, 
+        startCourse, 
+        completeCourse, 
+        updateLastActive 
+      }}
+    >
+      {children}
+    </UserProgressContext.Provider>
+  );
+};
+
+export function useUserProgress(): UserProgressContextData {
+  const context = useContext(UserProgressContext);
+  
+  if (!context) {
+    throw new Error('useUserProgress deve ser usado dentro de um UserProgressProvider');
+  }
+  
+  return context;
 }
