@@ -53,7 +53,7 @@ describe('CourseCard Component', () => {
     expect(screen.getByText('50% completo')).toBeInTheDocument();
     
     // Check if the progress bar width is set correctly
-    const progressFill = document.querySelector('.progress-fill');
+    const progressFill = screen.getByTestId('progress-fill');
     expect(progressFill).toHaveStyle('width: 50%');
   });
 

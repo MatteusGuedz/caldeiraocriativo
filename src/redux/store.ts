@@ -25,3 +25,6 @@ export const store = configureStore({
       },
     }).concat(errorMiddleware),
 });
+
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

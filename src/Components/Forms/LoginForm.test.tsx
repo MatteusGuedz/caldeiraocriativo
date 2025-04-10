@@ -19,7 +19,13 @@ jest.mock('react-router-dom', () => ({
 
 // Mock the signIn action
 jest.mock('../../redux/slices/authSlice', () => ({
-  signIn: jest.fn()
+  signIn: jest.fn().mockImplementation(() => ({
+    type: 'auth/signIn/fulfilled',
+    payload: {
+      user: { name: 'Test User', email: 'test@example.com' },
+      token: 'fake-token'
+    }
+  }))
 }));
 
 describe('LoginForm Component', () => {
@@ -65,6 +71,8 @@ describe('LoginForm Component', () => {
     // Check for validation errors
     await waitFor(() => {
       expect(screen.getByText(/e-mail é obrigatório/i)).toBeInTheDocument();
+    });
+    await waitFor(() => {
       expect(screen.getByText(/senha é obrigatória/i)).toBeInTheDocument();
     });
   });

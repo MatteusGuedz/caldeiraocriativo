@@ -13,6 +13,7 @@ interface LoginFormInputs {
   rememberMe?: boolean;
 }
 
+
 // Validation schema
 const schema = yup.object().shape({
   email: yup
@@ -109,7 +110,7 @@ const LoginForm: React.FC = () => {
           />
           <label htmlFor="rememberMe">Lembrar-me</label>
         </div>
-        <a href="#" className="form-link">Esqueceu a senha?</a>
+        <a href="/reset-password" className="form-link">Esqueceu a senha?</a>
       </div>
       
       <button
