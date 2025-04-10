@@ -1,7 +1,6 @@
-// src/Pages/Auth/Login.tsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { mockLogin } from '../../utils/authUtils';
+import { useAuth } from '../../context/AuthContext';
 import './auth.scss';
 
 const Login = () => {
@@ -10,9 +9,11 @@ const Login = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { signIn } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // console.log("Tentando fazer login com:", email, password);
     
     if (!email || !password) {
       setError('Por favor, preencha todos os campos');
@@ -21,15 +22,21 @@ const Login = () => {
     
     try {
       setLoading(true);
+      setError('');
       
-      // Login simplificado sem context por enquanto
-      mockLogin(email);
+      // Usar o método signIn do AuthContext
+      const success = await signIn(email, password);
+      // console.log("Resultado do login:", success);
       
-      // Redirecionamento direto
-      navigate('/dashboard');
+      if (success) {
+        // console.log("Login bem-sucedido, redirecionando para dashboard");
+        navigate('/dashboard');
+      } else {
+        setError('Credenciais inválidas. Tente novamente.');
+      }
     } catch (err) {
       console.error('Erro no login:', err);
-      setError('Credenciais inválidas. Tente novamente.');
+      setError('Erro ao fazer login. Tente novamente.');
     } finally {
       setLoading(false);
     }

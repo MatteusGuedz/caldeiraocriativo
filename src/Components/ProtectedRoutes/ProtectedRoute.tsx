@@ -5,6 +5,8 @@ import { useAuth } from '../../context/AuthContext';
 
 const ProtectedRoute: React.FC = () => {
   const { signed, loading } = useAuth();
+
+  
   
   // Adicionando console.log para debug
   console.log('ProtectedRoute status:', { signed, loading });

@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import './AdminHeader.scss';
 
-const AdminHeader: React.FC = () => {
+interface AdminHeaderProps {
+  onMenuClick: () => void; // Definição da propriedade
+}
+
+const AdminHeader: React.FC<AdminHeaderProps> = ({ onMenuClick }) => {
   const { user, signOut } = useAuth();
   const [showDropdown, setShowDropdown] = useState(false);
 

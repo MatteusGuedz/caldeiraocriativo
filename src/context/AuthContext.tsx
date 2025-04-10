@@ -58,8 +58,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         
         setUser(userData);
         
-        localStorage.setItem('@App:user', JSON.stringify(userData));
-        localStorage.setItem('@App:token', 'token-fake-para-testes');
+        localStorage.setItem('@CaldeiraoCreativo:user', JSON.stringify(userData));
+        localStorage.setItem('@CaldeiraoCreativo:token', 'token-fake-para-testes');
         
         setLoading(false);
         return true;
