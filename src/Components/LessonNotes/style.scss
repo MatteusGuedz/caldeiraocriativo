@@ -1,0 +1,126 @@
+// src/Components/LessonNotes/LessonNotes.scss
+@import '../../SCSS/_variables.scss';
+
+.lesson-notes-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 10px 0;
+  
+  .notes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 0;
+    }
+    
+    .save-status {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.6);
+      font-style: italic;
+    }
+  }
+  
+  .notes-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    
+    textarea {
+      width: 100%;
+      height: 250px;
+      flex: 1;
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: white;
+      padding: 15px;
+      resize: vertical;
+      font-family: inherit;
+      line-height: 1.5;
+      
+      &:focus {
+        outline: none;
+        border-color: $accent-color;
+        box-shadow: 0 0 0 2px rgba($accent-color, 0.2);
+      }
+      
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+      }
+    }
+    
+    .notes-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 15px;
+      
+      .notes-tips {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.5);
+        
+        p {
+          margin: 0;
+        }
+      }
+      
+      .notes-actions {
+        display: flex;
+        gap: 10px;
+        
+        button {
+          padding: 8px 15px;
+          border-radius: 6px;
+          font-size: 0.9rem;
+          cursor: pointer;
+          transition: all 0.2s;
+          
+          &.clear-button {
+            background-color: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+            
+            &:hover:not(:disabled) {
+              background-color: rgba(255, 255, 255, 0.1);
+            }
+          }
+          
+          &.export-button {
+            background-color: $accent-color;
+            color: white;
+            border: none;
+            
+            &:hover:not(:disabled) {
+              background-color: darken($accent-color, 10%);
+            }
+          }
+          
+          &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .lesson-notes-container {
+    .notes-footer {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      
+      .notes-tips {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
