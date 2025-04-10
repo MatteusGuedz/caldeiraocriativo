@@ -8,18 +8,18 @@ body, html, #root {
   input, 
   textarea, 
   select {
-    background-color: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    color: #f8fafc !important;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #f8fafc;
   
     &:focus {
-      outline: none !important;
-      border-color: #3b82f6 !important;
-      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
     }
   
     &::placeholder {
-      color: rgba(255, 255, 255, 0.4) !important;
+      color: rgba(255, 255, 255, 0.4);
     }
   }
   
@@ -29,29 +29,29 @@ body, html, #root {
     color: #f8fafc;
   
     th {
-      background-color: rgba(255, 255, 255, 0.05) !important;
-      color: #cbd5e1 !important;
+      background-color: rgba(255, 255, 255, 0.05);
+      color: #cbd5e1;
     }
   
     td {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-      color: #f8fafc !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      color: #f8fafc;
     }
   }
   
   // Estilos para botões
   button {
-    background-color: #3b82f6 !important;
-    color: white !important;
-    border: none !important;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
   
     &:hover {
-      background-color: darken(#3b82f6, 10%) !important;
+      background-color: darken(#3b82f6, 10%);
     }
   
     &:disabled {
-      background-color: #94a3b8 !important;
-      cursor: not-allowed !important;
+      background-color: #94a3b8;
+      cursor: not-allowed;
     }
   }
   
@@ -59,10 +59,10 @@ body, html, #root {
   .card, 
   .container, 
   .modal {
-    background-color: #1e293b !important;
-    color: #f8fafc !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+    background-color: #1e293b;
+    color: #f8fafc;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
   // Estilos de scrollbar
