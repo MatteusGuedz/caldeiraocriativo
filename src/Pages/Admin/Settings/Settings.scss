@@ -2,6 +2,8 @@
 
 .admin-settings-page {
   padding: 30px;
+  background-color: $primary-color;
+  color: $text-primary;
 
   .settings-header {
     display: flex;
@@ -12,7 +14,7 @@
     h1 {
       font-size: 2rem;
       margin: 0;
-      color: #1e293b;
+      color: $text-primary;
     }
 
     .settings-actions {
@@ -20,20 +22,20 @@
       gap: 15px;
 
       .btn-reset {
-        background-color: #f1f5f9;
-        color: #1e293b;
-        border: 1px solid #cbd5e1;
+        background-color: rgba(255, 255, 255, 0.05);
+        color: $text-primary;
+        border: 1px solid rgba(255, 255, 255, 0.1);
         padding: 10px 20px;
         border-radius: 6px;
         transition: all 0.3s ease;
 
         &:hover {
-          background-color: #e2e8f0;
+          background-color: rgba(255, 255, 255, 0.1);
         }
       }
 
       .btn-save {
-        background-color: #3b82f6;
+        background-color: $accent-color;
         color: white;
         border: none;
         padding: 10px 20px;
@@ -41,7 +43,7 @@
         transition: all 0.3s ease;
 
         &:hover {
-          background-color: #2563eb;
+          background-color: darken($accent-color, 10%);
         }
 
         &.saving {
@@ -61,30 +63,30 @@
     display: flex;
     gap: 15px;
     margin-bottom: 30px;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
     button {
       padding: 10px 20px;
       background: transparent;
       border: none;
-      color: #64748b;
+      color: $text-secondary;
       font-weight: 500;
       border-bottom: 2px solid transparent;
       transition: all 0.3s ease;
 
       &:hover {
-        color: #1e293b;
+        color: $text-primary;
       }
 
       &.active {
-        color: #3b82f6;
-        border-bottom-color: #3b82f6;
+        color: $accent-color;
+        border-bottom-color: $accent-color;
       }
     }
   }
 
   .settings-content {
-    background: white;
+    background: $secondary-color;
     border-radius: 12px;
     padding: 30px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -95,8 +97,8 @@
       h2 {
         font-size: 1.2rem;
         margin-bottom: 20px;
-        color: #1e293b;
-        border-bottom: 1px solid #e2e8f0;
+        color: $text-primary;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         padding-bottom: 10px;
       }
 
@@ -107,21 +109,23 @@
 
         label {
           width: 250px;
-          color: #64748b;
+          color: $text-secondary;
           font-weight: 500;
         }
 
         input, select {
           flex: 1;
           padding: 10px;
-          border: 1px solid #e2e8f0;
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.1);
           border-radius: 6px;
+          color: $text-primary;
           transition: all 0.3s ease;
 
           &:focus {
-            border-color: #3b82f6;
+            border-color: $accent-color;
             outline: none;
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+            box-shadow: 0 0 0 2px rgba($accent-color, 0.2);
           }
         }
 
@@ -144,7 +148,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #ccc;
+            background-color: rgba(255, 255, 255, 0.1);
             transition: .4s;
             border-radius: 34px;
 
@@ -162,7 +166,7 @@
           }
 
           input:checked + .slider {
-            background-color: #3b82f6;
+            background-color: $accent-color;
           }
 
           input:checked + .slider:before {
@@ -172,10 +176,8 @@
       }
     }
   }
-}
 
-@media (max-width: 768px) {
-  .admin-settings-page {
+  @media (max-width: 768px) {
     padding: 15px;
 
     .settings-navigation {
@@ -189,7 +191,7 @@
 
         &.active {
           border-bottom: none;
-          border-left-color: #3b82f6;
+          border-left-color: $accent-color;
         }
       }
     }
