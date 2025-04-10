@@ -1,0 +1,149 @@
+@import '../../SCSS/_variables.scss';
+
+.support-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+
+  .support-header {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    h1 {
+      font-size: 2.5rem;
+      color: $text-primary;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: $text-secondary;
+      font-size: 1.1rem;
+    }
+  }
+
+  .support-search {
+    max-width: 600px;
+    margin: 0 auto 2rem;
+
+    input {
+      width: 100%;
+      padding: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      color: $text-primary;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+
+      &:focus {
+        outline: none;
+        border-color: $accent-color;
+        box-shadow: 0 0 0 2px rgba($accent-color, 0.2);
+      }
+    }
+  }
+
+  .support-topics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+
+    .support-topic-card {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-decoration: none;
+      color: $text-primary;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.1);
+
+        .topic-arrow {
+          transform: translateX(5px);
+        }
+      }
+
+      .topic-icon {
+        font-size: 2.5rem;
+        margin-right: 1.5rem;
+        background: rgba(255, 255, 255, 0.1);
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+      }
+
+      .topic-content {
+        flex: 1;
+
+        h3 {
+          margin: 0 0 0.5rem 0;
+          font-size: 1.2rem;
+        }
+
+        p {
+          margin: 0;
+          color: $text-secondary;
+          font-size: 0.9rem;
+        }
+      }
+
+      .topic-arrow {
+        font-size: 1.5rem;
+        color: $accent-color;
+        transition: transform 0.3s ease;
+      }
+    }
+  }
+
+  .support-contact {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+
+    h2 {
+      color: $text-primary;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-methods {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+
+      .contact-method {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 1.5rem;
+        border-radius: 8px;
+
+        h3 {
+          color: $text-primary;
+          margin-bottom: 0.5rem;
+        }
+
+        p {
+          color: $text-secondary;
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  @media (max-width: $tablet) {
+    padding: 1rem;
+
+    .support-header {
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  }
+}

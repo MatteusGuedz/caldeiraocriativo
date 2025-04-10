@@ -1,0 +1,461 @@
+// src/Pages/Dashboard/Dashboard.scss
+@import '../../SCSS/_variables.scss';
+
+@mixin line-clamp($lines) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dashboard-container {
+  padding: 30px;
+  
+  // Cabeçalho de boas-vindas
+  .dashboard-welcome {
+    background: linear-gradient(135deg, $secondary-color, darken($primary-color, 5%));
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: $shadow-lg;
+    overflow: hidden;
+    position: relative;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba($accent-color, 0.1) 0%, transparent 70%);
+      opacity: 0.5;
+    }
+    
+    .welcome-content {
+      flex: 1;
+      
+      h1 {
+        font-size: 2rem;
+        margin: 0 0 10px 0;
+        color: white;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        animation: fadeInUp 0.5s ease;
+      }
+      
+      p {
+        font-size: 1.1rem;
+        color: $text-secondary;
+        max-width: 600px;
+        margin: 0;
+        animation: fadeInUp 0.5s ease 0.1s both;
+      }
+    }
+    
+    .user-stats {
+      display: flex;
+      gap: 15px;
+      animation: fadeInRight 0.5s ease 0.2s both;
+    }
+  }
+  
+  // Layout principal
+  .dashboard-main {
+    display: flex;
+    gap: 30px;
+    
+    .dashboard-content {
+      flex: 1;
+    }
+    
+    .dashboard-sidebar {
+      width: 350px;
+    }
+  }
+  
+  // Seções
+  .dashboard-section, .dashboard-sidebar-section {
+    background-color: $secondary-color;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: $shadow-md;
+    
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      
+      h2 {
+        font-size: 1.5rem;
+        margin: 0;
+      }
+      
+      .view-all {
+        color: $accent-color;
+        text-decoration: none;
+        font-size: 0.9rem;
+        
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+      
+      .progress-overview {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        
+        .progress-bar {
+          width: 150px;
+          height: 6px;
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 3px;
+          overflow: hidden;
+          
+          .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, #10b981, #3b82f6);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+          }
+        }
+        
+        .progress-text {
+          font-size: 0.8rem;
+          color: $text-secondary;
+        }
+      }
+    }
+  }
+  
+  // Cursos em andamento
+  .in-progress-courses {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    gap: 20px;
+    
+    .in-progress-card {
+      display: flex;
+      background-color: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: $shadow-lg;
+      }
+      
+      .course-image {
+        width: 180px;
+        position: relative;
+        overflow: hidden;
+        
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.5s ease;
+        }
+        
+        .course-progress-indicator {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          
+          .progress-circle {
+            width: 50px;
+            height: 50px;
+            
+            svg {
+              width: 100%;
+              height: 100%;
+              transform: rotate(-90deg);
+              
+              .circle-bg {
+                fill: none;
+                stroke: rgba(255, 255, 255, 0.1);
+                stroke-width: 3;
+              }
+              
+              .circle {
+                fill: none;
+                stroke: $accent-color;
+                stroke-width: 3;
+                stroke-linecap: round;
+              }
+              
+              .percentage {
+                fill: white;
+                font-size: 10px;
+                text-anchor: middle;
+                dominant-baseline: middle;
+                transform: rotate(90deg);
+              }
+            }
+          }
+        }
+      }
+      
+      .course-info {
+        flex: 1;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        
+        h3 {
+          margin: 0 0 10px 0;
+          font-size: 1.2rem;
+          display: -webkit-box;
+        
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+        
+        .last-accessed {
+          font-size: 0.85rem;
+          color: $text-secondary;
+          margin-bottom: 15px;
+        }
+        
+        .progress-bar {
+          height: 6px;
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 3px;
+          overflow: hidden;
+          margin-bottom: 15px;
+          
+          .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, #10b981, #3b82f6);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+          }
+        }
+        
+        .continue-btn {
+          margin-top: auto;
+          align-self: flex-start;
+          background-color: $accent-color;
+          color: white;
+          text-decoration: none;
+          padding: 8px 16px;
+          border-radius: 6px;
+          font-size: 0.9rem;
+          transition: background-color 0.2s ease;
+          
+          &:hover {
+            background-color: darken($accent-color, 10%);
+          }
+        }
+      }
+    }
+  }
+  
+  // Cursos recomendados
+  .recommended-courses {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  // Conquistas
+  .achievement-progress {
+    margin-top: 20px;
+    
+    p {
+      font-size: 0.9rem;
+      color: $text-secondary;
+      margin: 0 0 8px 0;
+    }
+    
+    .progress-bar {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      overflow: hidden;
+      
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(to right, #f59e0b, #ef4444);
+        border-radius: 3px;
+        transition: width 0.5s ease;
+      }
+    }
+  }
+  
+  // Animações
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInRight {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  // Responsividade
+  @media (max-width: $desktop) {
+    .dashboard-main {
+      flex-direction: column;
+      
+      .dashboard-sidebar {
+        width: 100%;
+      }
+    }
+  }
+  
+  @media (max-width: $tablet) {
+    padding: 15px;
+    
+    .dashboard-welcome {
+      flex-direction: column;
+      align-items: flex-start;
+      
+      .welcome-content {
+        margin-bottom: 20px;
+      }
+      
+      .user-stats {
+        flex-wrap: wrap;
+        width: 100%;
+      }
+    }
+    
+    .in-progress-courses {
+      grid-template-columns: 1fr;
+      
+      .in-progress-card {
+        flex-direction: column;
+        
+        .course-image {
+          width: 100%;
+          height: 160px;
+        }
+      }
+    }
+  }
+}
+
+.dashboard-sidebar-section {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 30px;
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h2 {
+      font-size: 1.2rem;
+      margin: 0;
+    }
+
+    .view-all {
+      color: $accent-color;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  // Estilização específica para o feed de atividades
+  .activity-feed {
+    .activity-item {
+      display: flex;
+      gap: 15px;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+      margin-bottom: 10px;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      color: inherit;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.05);
+        transform: translateY(-2px);
+      }
+
+      .activity-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+
+        &.achievement {
+          background: linear-gradient(135deg, #f59e0b, #fbbf24);
+        }
+
+        &.lesson {
+          background: linear-gradient(135deg, #10b981, #34d399);
+        }
+
+        &.course {
+          background: linear-gradient(135deg, #3b82f6, #60a5fa);
+        }
+      }
+
+      .activity-content {
+        flex: 1;
+        overflow: hidden;
+
+        .activity-title {
+          color: $text-primary;
+          font-weight: 500;
+          margin-bottom: 4px;
+          @include line-clamp(1);
+        }
+
+        .activity-description {
+          color: $text-secondary;
+          font-size: 0.9rem;
+          margin-bottom: 4px;
+          @include line-clamp(2);
+        }
+
+        .activity-time {
+          color: rgba(255, 255, 255, 0.5);
+          font-size: 0.8rem;
+        }
+      }
+    }
+
+    .empty-feed {
+      text-align: center;
+      padding: 20px;
+      color: $text-secondary;
+      font-style: italic;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+    }
+  }}
