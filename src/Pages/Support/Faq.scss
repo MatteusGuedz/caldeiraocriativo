@@ -1,9 +1,10 @@
 @import '../../SCSS/_variables.scss';
 
 .faq-page {
-  max-width: 1200px;
-  margin: 0 auto;
   padding: 2rem;
+  background-color: $primary-color;
+  color: $text-primary;
+  min-height: calc(100vh - 64px);
 
   .faq-header {
     text-align: center;
@@ -25,9 +26,10 @@
     display: grid;
     grid-template-columns: 250px 1fr;
     gap: 2rem;
-    background: rgba(255, 255, 255, 0.05);
+    background: $secondary-color;
     border-radius: 12px;
     padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
     .faq-categories {
       display: flex;
@@ -37,7 +39,7 @@
       padding-right: 1rem;
 
       .category-btn {
-        background: none;
+        background: rgba(255, 255, 255, 0.05);
         border: none;
         text-align: left;
         padding: 0.75rem 1rem;
@@ -47,7 +49,8 @@
         cursor: pointer;
 
         &:hover {
-          background: rgba(255, 255, 255, 0.05);
+          background: rgba(255, 255, 255, 0.1);
+          color: $text-primary;
         }
 
         &.active {
@@ -74,22 +77,22 @@
           display: flex;
           justify-content: space-between;
           align-items: center;
-          background: none;
+          background: $accent-color;
           border: none;
           text-align: left;
           padding: 1rem;
-          color: $text-primary;
+          color: white;
           font-weight: 500;
           cursor: pointer;
           transition: background 0.3s ease;
 
           &:hover {
-            background: rgba(255, 255, 255, 0.05);
+            background: darken($accent-color, 5%);
           }
 
           .toggle-icon {
             font-size: 1.5rem;
-            color: $accent-color;
+            color: white;
           }
         }
 
@@ -107,9 +110,10 @@
   .faq-contact {
     margin-top: 2rem;
     text-align: center;
-    background: rgba(255, 255, 255, 0.05);
+    background: $secondary-color;
     padding: 2rem;
     border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
     h2 {
       color: $text-primary;
@@ -137,6 +141,8 @@
   }
 
   @media (max-width: $tablet) {
+    padding: 1rem;
+
     .faq-content {
       grid-template-columns: 1fr;
 

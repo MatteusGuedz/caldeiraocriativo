@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
+import ImgAvatar from '../Assets/images/avatar.jpg';
 
 export interface User {
   id: string;
@@ -52,7 +53,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           id: '1',
           name: email.split('@')[0], // Nome baseado no e-mail
           email,
-          avatar: '/default-avatar.png',
+          avatar: ImgAvatar,
           role: email.includes('admin') ? 'admin' : 'user'
         };
         

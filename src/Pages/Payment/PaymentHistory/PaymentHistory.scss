@@ -4,6 +4,8 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
+  background-color: $primary-color;
+  color: $text-primary;
 
   .payment-history-header {
     text-align: center;
@@ -28,13 +30,15 @@
     height: 300px;
     color: $text-secondary;
     font-size: 1.2rem;
+    background-color: $primary-color;
   }
 
   .no-transactions {
-    background: rgba(255, 255, 255, 0.05);
+    background: $secondary-color;
     border-radius: 12px;
     padding: 2rem;
     text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
     p {
       color: $text-secondary;
@@ -43,16 +47,17 @@
   }
 
   .transactions-table {
-    background: rgba(255, 255, 255, 0.05);
+    background: $secondary-color;
     border-radius: 12px;
     overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
     table {
       width: 100%;
       border-collapse: collapse;
 
       thead {
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.05);
 
         th {
           padding: 1rem;
@@ -67,7 +72,7 @@
           transition: background-color 0.3s ease;
 
           &:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.05);
           }
 
           td {

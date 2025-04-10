@@ -1,7 +1,9 @@
 @import '../../../SCSS/_variables.scss';
 
 .admin-analytics-page {
-  padding: 2rem;
+  padding: 30px;
+  background-color: $primary-color;
+  color: $text-primary;
 
   .analytics-header {
     display: flex;
@@ -46,7 +48,7 @@
     gap: 1.5rem;
 
     .analytics-card {
-      background: rgba(255, 255, 255, 0.05);
+      background: $secondary-color;
       border-radius: 12px;
       padding: 1.5rem;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -99,6 +101,7 @@
     height: 100%;
     color: $text-secondary;
     font-size: 1.2rem;
+    background-color: $primary-color;
   }
 
   @media (max-width: $tablet) {

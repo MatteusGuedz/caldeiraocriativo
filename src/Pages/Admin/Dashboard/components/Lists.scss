@@ -49,8 +49,12 @@
 
     .user-name {
       font-weight: 500;
-      color: #1e293b;
+      color: #f8fafc; // Cor padrão
       margin-bottom: 0.25rem;
+
+      &:hover {
+        color: #1e293b; // Cor ao passar o mouse
+      }
     }
 
     .user-email {

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import './AdminHeader.scss';
+import ImgAvatar from '../../Assets/images/avatar.jpg';
 
 interface AdminHeaderProps {
   onMenuClick: () => void; // Definição da propriedade
@@ -22,14 +23,14 @@ const AdminHeader: React.FC<AdminHeaderProps> = ({ onMenuClick }) => {
       <div className="admin-header__search">
         <input type="text" placeholder="Buscar..." />
         <button type="button">
-          <i className="fa fa-search"></i>
+          <i className="fa fa-search">🔍</i>
         </button>
       </div>
 
       <div className="admin-header__actions">
         <div className="admin-header__notifications">
           <button type="button">
-            <i className="fa fa-bell"></i>
+            <i className="fa fa-bell">🔔</i>
             <span className="badge">3</span>
           </button>
         </div>
@@ -40,7 +41,7 @@ const AdminHeader: React.FC<AdminHeaderProps> = ({ onMenuClick }) => {
             onClick={() => setShowDropdown(!showDropdown)}
           >
             <img 
-              src={user?.avatar || "/default-avatar.png"} 
+              src={user?.avatar || ImgAvatar} 
               alt={user?.name || "Admin"} 
               className="admin-header__avatar"
             />

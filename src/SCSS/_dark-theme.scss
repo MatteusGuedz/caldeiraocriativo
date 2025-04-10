@@ -1,0 +1,84 @@
+// src/SCSS/_dark-theme.scss
+body, html, #root {
+    background-color: #0f172a;
+    color: #f8fafc;
+  }
+  
+  // Estilos globais para inputs
+  input, 
+  textarea, 
+  select {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #f8fafc !important;
+  
+    &:focus {
+      outline: none !important;
+      border-color: #3b82f6 !important;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+    }
+  
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.4) !important;
+    }
+  }
+  
+  // Estilos para tabelas
+  table {
+    background-color: #1e293b;
+    color: #f8fafc;
+  
+    th {
+      background-color: rgba(255, 255, 255, 0.05) !important;
+      color: #cbd5e1 !important;
+    }
+  
+    td {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+      color: #f8fafc !important;
+    }
+  }
+  
+  // Estilos para botões
+  button {
+    background-color: #3b82f6 !important;
+    color: white !important;
+    border: none !important;
+  
+    &:hover {
+      background-color: darken(#3b82f6, 10%) !important;
+    }
+  
+    &:disabled {
+      background-color: #94a3b8 !important;
+      cursor: not-allowed !important;
+    }
+  }
+  
+  // Estilos para cards e containers
+  .card, 
+  .container, 
+  .modal {
+    background-color: #1e293b !important;
+    color: #f8fafc !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  // Estilos de scrollbar
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }

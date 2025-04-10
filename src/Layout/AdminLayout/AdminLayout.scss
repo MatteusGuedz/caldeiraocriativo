@@ -4,7 +4,8 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: #f8fafc;
+  background-color: $primary-color;
+  color: $text-primary;
 
   .admin-body {
     display: flex;
@@ -15,13 +16,14 @@
       flex: 1;
       padding: 20px;
       overflow-y: auto;
-      background-color: #f1f5f9;
+      background-color: $primary-color;
     }
   }
 }
 
 .admin-header {
-  background: white;
+  background: $secondary-color;
+  color: $text-primary;
   padding: 1rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -29,56 +31,172 @@
   justify-content: space-between;
   z-index: 10;
 
-  .header-left {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-
-    .menu-button {
-      border: none;
-      background: none;
-      cursor: pointer;
-      padding: 0.5rem;
-      border-radius: 0.375rem;
-      color: #64748b;
-
-      &:hover {
-        background-color: #f1f5f9;
-      }
-    }
-
-    .brand {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: #0f172a;
+  &__logo {
+    max-width: 150px;
+    
+    img {
+      height: 40px;
+      max-width: 100%;
     }
   }
 
-  .header-right {
+  &__search {
     display: flex;
     align-items: center;
-    gap: 1rem;
-
-    .admin-info {
+    flex: 1;
+    max-width: 500px;
+    margin: 0 30px;
+    position: relative;
+    
+    input {
+      width: 100%;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      padding: 0 15px;
+      padding-right: 45px;
+      font-size: 14px;
+      color: $text-primary;
+      
+      &:focus {
+        outline: none;
+        border-color: $accent-color;
+      }
+    }
+    
+    button {
+      position: absolute;
+      right: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem;
-      border-radius: 0.375rem;
-      cursor: pointer;
-
+      justify-content: center;
+      color: $text-secondary;
+      
       &:hover {
-        background-color: #f1f5f9;
+        color: $accent-color;
       }
+    }
+  }
 
-      img {
-        width: 2rem;
-        height: 2rem;
-        border-radius: 50%;
+  &__actions {
+    display: flex;
+    align-items: center;
+  }
+
+  &__notifications {
+    margin-right: 20px;
+    position: relative;
+    
+    button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: $text-secondary;
+      
+      &:hover {
+        color: $accent-color;
       }
+    }
+    
+    .badge {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background-color: #f44336;
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
 
-      span {
-        color: #64748b;
+  &__user {
+    position: relative;
+  }
+
+  &__user-info {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+  }
+
+  &__avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+    border: 2px solid $accent-color;
+  }
+
+  &__username {
+    font-weight: 500;
+    margin-right: 5px;
+    color: $text-primary;
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: $secondary-color;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    width: 200px;
+    z-index: 10;
+    margin-top: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      
+      li {
+        a, button {
+          display: block;
+          padding: 12px 15px;
+          color: $text-primary;
+          text-decoration: none;
+          width: 100%;
+          text-align: left;
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-size: 14px;
+          
+          &:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+          }
+        }
+        
+        &:not(:last-child) {
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
       }
     }
   }
@@ -86,8 +204,9 @@
 
 .admin-sidebar {
   width: 240px;
-  background: white;
-  border-right: 1px solid #e2e8f0;
+  background: $secondary-color;
+  color: $text-primary;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
   overflow-y: auto;
 
@@ -113,7 +232,7 @@
 
     .section-title {
       padding: 0.5rem 1rem;
-      color: #64748b;
+      color: $text-secondary;
       font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
@@ -123,24 +242,26 @@
       display: flex;
       align-items: center;
       padding: 0.75rem 1rem;
-      color: #64748b;
+      color: $text-secondary;
       text-decoration: none;
       transition: all 0.2s ease;
 
       &:hover {
-        background-color: #f1f5f9;
-        color: #0f172a;
+        background-color: rgba(255, 255, 255, 0.05);
+        color: $text-primary;
       }
 
       &.active {
-        background-color: #e2e8f0;
-        color: #0f172a;
+        background-color: rgba($accent-color, 0.1);
+        color: $text-primary;
+        border-left: 3px solid $accent-color;
       }
 
       .menu-icon {
         width: 1.5rem;
         height: 1.5rem;
         margin-right: 0.75rem;
+        color: $text-secondary;
       }
 
       .menu-text {

@@ -1,5 +1,6 @@
 // src/SCSS/style.scss
 @import './_variables.scss';
+@import './_dark-theme.scss';
 
 *, *:before, *:after {
   box-sizing: border-box;
@@ -30,6 +31,7 @@ img {
   height: 100%;
   font-size: 1.2rem;
   color: $text-secondary;
+  background-color: $primary-color;
 }
 
 .error {
@@ -41,6 +43,7 @@ img {
   color: #ef4444;
   padding: $spacing-md;
   text-align: center;
+  background-color: $primary-color;
 }
 
 /* Estilos para botões */
@@ -64,18 +67,23 @@ button {
 }
 
 /* Estilos para inputs */
-input {
+input, select, textarea {
   width: 100%;
   padding: $spacing-sm;
-  border: 1px solid #475569;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: $border-radius-sm;
-  background-color: #1e293b;
+  background-color: rgba(255, 255, 255, 0.05);
   color: $text-primary;
-  margin-bottom: $spacing-sm;
+  // margin-bottom: $spacing-sm;
   
   &:focus {
     outline: none;
     border-color: $accent-color;
+    box-shadow: 0 0 0 2px rgba($accent-color, 0.2);
+  }
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.4);
   }
 }
 

@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
+import ImgAvatar from '../Assets/images/avatar.jpg';
 
 export interface UserProgress {
   level: number;
@@ -26,7 +27,7 @@ const defaultProgress: UserProgress = {
   user: {
     name: 'Usuário',
     email: 'usuario@exemplo.com',
-    avatar: '/default-avatar.png'
+    avatar: ImgAvatar
   }
 };
 

@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Navbar from '../../Layout/Navbar';
+import Sidebar from '../../Layout/Sidebar';
 import './Faq.scss';
 
 interface FaqItem {
@@ -54,6 +57,9 @@ const faqData: FaqItem[] = [
 const Faq: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<string | null>(faqData[0].category);
   const [openQuestions, setOpenQuestions] = useState<{[key: string]: boolean}>({});
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [collapsedSidebar, setCollapsedSidebar] = useState(false);
+  const navigate = useNavigate();
 
   const toggleQuestion = (category: string, question: string) => {
     const key = `${category}-${question}`;
@@ -65,63 +71,81 @@ const Faq: React.FC = () => {
 
   const categories = faqData.map(item => item.category);
 
+  const toggleMobileSidebar = () => {
+    setMobileSidebarOpen(prev => !prev);
+  };
+
+  const toggleSidebarCollapse = () => {
+    setCollapsedSidebar(prev => !prev);
+  };
+
   return (
-    <div className="faq-page">
-      <div className="faq-header">
-        <h1>Central de Ajuda</h1>
-        <p>Encontre respostas para suas dúvidas mais frequentes</p>
-      </div>
+    <div className="main-layout">
+      <Navbar onToggleSidebar={toggleMobileSidebar} />
+      <div className="main-body">
+        <Sidebar 
+          mobileOpen={mobileSidebarOpen}
+          collapsed={collapsedSidebar}
+          onToggleCollapse={toggleSidebarCollapse}
+        />
+        <main className="main-content faq-page">
+          <div className="faq-header">
+            <h1>Central de Ajuda</h1>
+            <p>Encontre respostas para suas dúvidas mais frequentes</p>
+          </div>
 
-      <div className="faq-content">
-        <div className="faq-categories">
-          {categories.map(category => (
-            <button
-              key={category}
-              className={`category-btn ${activeCategory === category ? 'active' : ''}`}
-              onClick={() => setActiveCategory(category)}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
+          <div className="faq-content">
+            <div className="faq-categories">
+              {categories.map(category => (
+                <button
+                  key={category}
+                  className={`category-btn ${activeCategory === category ? 'active' : ''}`}
+                  onClick={() => setActiveCategory(category)}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
 
-        <div className="faq-questions">
-          {faqData
-            .filter(item => item.category === activeCategory)
-            .map(item => (
-              <div key={item.category} className="category-section">
-                {item.questions.map(question => (
-                  <div 
-                    key={question.question} 
-                    className="faq-item"
-                  >
-                    <button 
-                      className="question-toggle"
-                      onClick={() => toggleQuestion(item.category, question.question)}
-                    >
-                      {question.question}
-                      <span className="toggle-icon">
-                        {openQuestions[`${item.category}-${question.question}`] ? '−' : '+'}
-                      </span>
-                    </button>
-                    {openQuestions[`${item.category}-${question.question}`] && (
-                      <div className="answer">
-                        {question.answer}
+            <div className="faq-questions">
+              {faqData
+                .filter(item => item.category === activeCategory)
+                .map(item => (
+                  <div key={item.category} className="category-section">
+                    {item.questions.map(question => (
+                      <div 
+                        key={question.question} 
+                        className="faq-item"
+                      >
+                        <button 
+                          className="question-toggle"
+                          onClick={() => toggleQuestion(item.category, question.question)}
+                        >
+                          {question.question}
+                          <span className="toggle-icon">
+                            {openQuestions[`${item.category}-${question.question}`] ? '−' : '+'}
+                          </span>
+                        </button>
+                        {openQuestions[`${item.category}-${question.question}`] && (
+                          <div className="answer">
+                            {question.answer}
+                          </div>
+                        )}
                       </div>
-                    )}
+                    ))}
                   </div>
                 ))}
-              </div>
-            ))}
-        </div>
-      </div>
+            </div>
+          </div>
 
-      <div className="faq-contact">
-        <h2>Ainda com dúvidas?</h2>
-        <p>Entre em contato conosco através do nosso e-mail de suporte:</p>
-        <a href="mailto:suporte@caldeiraocriativo.com" className="contact-email">
-          suporte@caldeiraocriativo.com
-        </a>
+          <div className="faq-contact">
+            <h2>Ainda com dúvidas?</h2>
+            <p>Entre em contato conosco através do nosso e-mail de suporte:</p>
+            <a href="mailto:suporte@caldeiraocriativo.com" className="contact-email">
+              suporte@caldeiraocriativo.com
+            </a>
+          </div>
+        </main>
       </div>
     </div>
   );

@@ -1,33 +1,34 @@
 import React from 'react';
 import './Lists.scss';
+import CourseCapa from '../../../../Assets/images/capa-exemple.jpeg'
 
 const mockCourses = [
   {
     id: 1,
     title: 'Introdução à Criatividade com IA',
     enrollments: 245,
-    thumbnail: '/course-1.jpg',
+    thumbnail: CourseCapa ,
     rating: 4.8
   },
   {
     id: 2,
     title: 'Design Thinking Avançado',
     enrollments: 189,
-    thumbnail: '/course-2.jpg',
+    thumbnail: CourseCapa ,
     rating: 4.7
   },
   {
     id: 3,
     title: 'Criatividade na Prática',
     enrollments: 156,
-    thumbnail: '/course-3.jpg',
+    thumbnail: CourseCapa ,
     rating: 4.9
   },
   {
     id: 4,
     title: 'Fundamentos de UX/UI',
     enrollments: 134,
-    thumbnail: '/course-4.jpg',
+    thumbnail: CourseCapa ,
     rating: 4.6
   }
 ];
