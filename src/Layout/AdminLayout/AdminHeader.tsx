@@ -1,48 +1,102 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../../context/AuthContext';
-import './AdminLayout.scss';
+// src/context/AuthContext.tsx
+import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 
-interface AdminHeaderProps {
-  onMenuClick: () => void;
+export interface User {
+  name: string;
+  email: string;
+  avatar?: string;
 }
 
-const AdminHeader: React.FC<AdminHeaderProps> = ({ onMenuClick }) => {
-  const navigate = useNavigate();
-  const { user, logout } = useAuth();
+interface AuthContextData {
+  user: User | null;
+  signed: boolean;
+  loading: boolean;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => void;
+}
 
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
+const AuthContext = createContext<AuthContextData>({} as AuthContextData);
+
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // Efeito para carregar usuário do localStorage ao iniciar
+  useEffect(() => {
+    try {
+      const storedUser = localStorage.getItem('@CaldeiraoCreativo:user');
+      const storedToken = localStorage.getItem('@CaldeiraoCreativo:token');
+      
+      if (storedUser && storedToken) {
+        const parsedUser = JSON.parse(storedUser);
+        setUser({
+          name: parsedUser.name,
+          email: parsedUser.email,
+          avatar: parsedUser.avatar || '/default-avatar.png'
+        });
+      }
+    } catch (error) {
+      console.error('Erro ao carregar usuário do localStorage:', error);
+    } finally {
+      // Certifique-se de que o loading seja sempre definido como false
+      setLoading(false);
+    }
+  }, []);
+
+  const login = async (email: string, password: string) => {
+    try {
+      setLoading(true);
+      
+      // Simulação de login simples
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      const userData = { 
+        name: 'Usuário Teste', 
+        email,
+        avatar: '/default-avatar.png'
+      };
+      const token = 'mock-jwt-token';
+      
+      localStorage.setItem('@CaldeiraoCreativo:token', token);
+      localStorage.setItem('@CaldeiraoCreativo:user', JSON.stringify(userData));
+      
+      setUser(userData);
+      return;
+    } catch (error) {
+      console.error('Erro ao fazer login:', error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const logout = () => {
+    localStorage.removeItem('@CaldeiraoCreativo:token');
+    localStorage.removeItem('@CaldeiraoCreativo:user');
+    setUser(null);
   };
 
   return (
-    <header className="admin-header">
-      <div className="header-left">
-        <button className="menu-button" onClick={onMenuClick}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M3 12h18M3 6h18M3 18h18" />
-          </svg>
-        </button>
-        <span className="brand">Painel Administrativo</span>
-      </div>
-
-      <div className="header-right">
-        <div className="admin-info">
-          <img
-            src={user?.avatar || '/default-avatar.png'}
-            alt="Admin Avatar"
-          />
-          <span>{user?.name || 'Admin'}</span>
-        </div>
-        <button className="menu-button" onClick={handleLogout}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
-          </svg>
-        </button>
-      </div>
-    </header>
+    <AuthContext.Provider value={{ 
+      signed: !!user, 
+      user, 
+      loading, 
+      login, 
+      logout 
+    }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 
-export default AdminHeader;
+export function useAuth() {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth deve ser usado dentro de um AuthProvider');
+  }
+  return context;
+}

@@ -1,0 +1,127 @@
+@import '../../../SCSS/_variables.scss';
+
+.payment-history-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+
+  .payment-history-header {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    h1 {
+      font-size: 2.5rem;
+      color: $text-primary;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: $text-secondary;
+      font-size: 1.1rem;
+    }
+  }
+
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    color: $text-secondary;
+    font-size: 1.2rem;
+  }
+
+  .no-transactions {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+
+    p {
+      color: $text-secondary;
+      font-size: 1.1rem;
+    }
+  }
+
+  .transactions-table {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    overflow: hidden;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      thead {
+        background: rgba(255, 255, 255, 0.1);
+
+        th {
+          padding: 1rem;
+          text-align: left;
+          color: $text-secondary;
+          font-weight: 500;
+        }
+      }
+
+      tbody {
+        tr {
+          transition: background-color 0.3s ease;
+
+          &:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+          }
+
+          td {
+            padding: 1rem;
+            color: $text-primary;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+            &:last-child {
+              text-align: center;
+            }
+          }
+
+          .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            color: white;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+          }
+
+          .invoice-btn {
+            background: $accent-color;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+              background-color: darken($accent-color, 10%);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: $tablet) {
+    padding: 1rem;
+
+    .payment-history-header {
+      h1 {
+        font-size: 2rem;
+      }
+    }
+
+    .transactions-table {
+      overflow-x: auto;
+
+      table {
+        min-width: 800px;
+      }
+    }
+  }
+}

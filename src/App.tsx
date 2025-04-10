@@ -28,8 +28,8 @@ import Feedback from './Pages/Support/Feedback';
 import Support from './Pages/Support/Support'; // Futura implementação
 
 // Páginas de Checkout e Pagamento
-import Checkout from './Pages/Payment/Subscriptions';
-import Subscriptions from './Pages/Payment/Subscriptions'; // Futura implementação
+import Checkout from './Pages/Payment/Subscriptions/Subscriptions';
+import Subscriptions from './Pages/Payment/Subscriptions/Subscriptions'; // Futura implementação
 import PaymentHistory from './Pages/Payment/PaymentHistory'; // Futura implementação
 
 // Páginas Administrativas

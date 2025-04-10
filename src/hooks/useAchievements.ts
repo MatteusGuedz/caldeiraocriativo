@@ -1,5 +1,4 @@
-// src/hooks/useAchievements.ts
-import { useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
 
 export interface Achievement {
   id: number;
@@ -69,7 +68,19 @@ const defaultAchievements: Achievement[] = [
   }
 ];
 
-export function useAchievements() {
+interface AchievementsContextType {
+  achievements: Achievement[];
+  loading: boolean;
+  updateAchievementProgress: (
+    achievementId: number, 
+    progressIncrement?: number
+  ) => void;
+  unlockAchievement: (achievementId: number) => void;
+}
+
+const AchievementsContext = createContext<AchievementsContextType>({} as AchievementsContextType);
+
+export const AchievementsProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [achievements, setAchievements] = useState<Achievement[]>([]);
   const [loading, setLoading] = useState(true);
   
@@ -163,9 +174,6 @@ export function useAchievements() {
   
   // Função para mostrar uma notificação de conquista
   const showAchievementNotification = (achievement: Achievement) => {
-    // Aqui você pode implementar uma notificação na tela
-    console.log(`Conquista desbloqueada: ${achievement.name}`);
-    
     // Criar um elemento de notificação visual
     const notification = document.createElement('div');
     notification.className = 'achievement-notification';
@@ -193,11 +201,25 @@ export function useAchievements() {
       }, 500);
     }, 5000);
   };
-  
-  return {
+
+  const contextValue: AchievementsContextType = {
     achievements,
     loading,
     updateAchievementProgress,
     unlockAchievement
   };
-}
+
+  return (
+    <AchievementsContext.Provider value={contextValue}>
+      {children}
+    </AchievementsContext.Provider>
+  );
+};
+
+export const useAchievements = () => {
+  const context = useContext(AchievementsContext);
+  if (!context) {
+    throw new Error('useAchievements deve ser usado dentro de um AchievementsProvider');
+  }
+  return context;
+};

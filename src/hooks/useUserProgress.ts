@@ -1,5 +1,4 @@
-// src/hooks/useUserProgress.ts
-import { useState, useEffect } from 'react';
+import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 
 export interface UserProgress {
   level: number;
@@ -26,18 +25,29 @@ const defaultProgress: UserProgress = {
   lastActive: new Date().toISOString(),
   user: {
     name: 'Usuário',
-    email: 'usuario@exemplo.com'
+    email: 'usuario@exemplo.com',
+    avatar: '/default-avatar.png'
   }
 };
-
-// Resto do código permanece o mesmo...
 
 // Calcular o XP necessário para um certo nível
 const calculateXpForLevel = (level: number): number => {
   return Math.floor(100 * Math.pow(1.5, level - 1));
 };
 
-export function useUserProgress() {
+interface UserProgressContextType {
+  userProgress: UserProgress;
+  loading: boolean;
+  addXp: (amount: number) => void;
+  completeLesson: (courseId: number, lessonId: number) => void;
+  startCourse: (courseId: number) => void;
+  completeCourse: (courseId: number) => void;
+  updateLastActive: () => void;
+}
+
+const UserProgressContext = createContext<UserProgressContextType>({} as UserProgressContextType);
+
+export const UserProgressProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [userProgress, setUserProgress] = useState<UserProgress>(defaultProgress);
   const [loading, setLoading] = useState(true);
   
@@ -219,7 +229,7 @@ export function useUserProgress() {
     }, 5000);
   };
   
-  return {
+  const contextValue: UserProgressContextType = {
     userProgress,
     loading,
     addXp,
@@ -228,4 +238,18 @@ export function useUserProgress() {
     completeCourse,
     updateLastActive
   };
-}
+
+  return (
+    <UserProgressContext.Provider value={contextValue}>
+      {children}
+    </UserProgressContext.Provider>
+  );
+};
+
+export const useUserProgress = () => {
+  const context = useContext(UserProgressContext);
+  if (!context) {
+    throw new Error('useUserProgress deve ser usado dentro de um UserProgressProvider');
+  }
+  return context;
+};
