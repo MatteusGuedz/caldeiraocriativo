@@ -19,10 +19,14 @@ const LessonComments: React.FC = () => {
   const [newComment, setNewComment] = useState('');
   const [replyingTo, setReplyingTo] = useState<number | null>(null);
   const [replyText, setReplyText] = useState('');
-  
+
+
+
   useEffect(() => {
     // Carregar comentários do localStorage ou dados mockados
     const loadComments = () => {
+      if (!courseId || !lessonId) return;
+      
       const savedComments = localStorage.getItem(`comments_${courseId}_${lessonId}`);
       if (savedComments) {
         setComments(JSON.parse(savedComments));
@@ -61,11 +65,16 @@ const LessonComments: React.FC = () => {
         localStorage.setItem(`comments_${courseId}_${lessonId}`, JSON.stringify(mockComments));
       }
     };
-
-    if (courseId && lessonId) {
-      loadComments();
-    }
+  
+    loadComments();
   }, [courseId, lessonId]);
+
+
+
+
+
+  
+ 
 
   const handleAddComment = (e: React.FormEvent) => {
     e.preventDefault();

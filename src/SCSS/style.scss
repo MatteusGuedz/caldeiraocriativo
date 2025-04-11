@@ -194,3 +194,58 @@ input, select, textarea {
     }
   }
 }
+
+// src/SCSS/style.scss - Adicionar no final do arquivo
+
+// Classes de utilidade
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-primary {
+  color: $text-primary;
+}
+
+.text-secondary {
+  color: $text-secondary;
+}
+
+.bg-primary {
+  background-color: $primary-color;
+}
+
+.bg-secondary {
+  background-color: $secondary-color;
+}
+
+.bg-accent {
+  background-color: $accent-color;
+}
+
+.p-1 { padding: $spacing-xs; }
+.p-2 { padding: $spacing-sm; }
+.p-3 { padding: $spacing-md; }
+.p-4 { padding: $spacing-lg; }
+.p-5 { padding: $spacing-xl; }
+
+// ... outras classes de utilidade

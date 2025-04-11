@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './SCSS/style.scss';
 import App from './App';
-// import { Provider } from 'react-redux';
-// import store from 'slices/theme/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(

@@ -38,7 +38,7 @@ const AchievementsList: React.FC<AchievementsListProps> = ({
   achievements, 
   compact = false 
 }) => {
-  if (achievements.length === 0) {
+  if (!achievements || achievements.length === 0) {
     return (
       <div className="achievements-empty">
         <p>Nenhuma conquista desbloqueada ainda. Continue aprendendo para ganhar conquistas!</p>

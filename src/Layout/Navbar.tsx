@@ -50,7 +50,7 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
     } else {
       setShowSearchResults(false);
     }
-  }, [searchQuery, search]);
+  }, [searchQuery, search, setShowSearchResults]);
 
   const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
 

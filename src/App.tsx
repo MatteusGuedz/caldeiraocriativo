@@ -5,8 +5,6 @@ import { store, useAppDispatch } from './redux/store';
 import { loadUser } from './redux/slices/authSlice';
 import { loadUserProgress } from './redux/slices/userProgressSlice';
 import { loadAchievements } from './redux/slices/achievementsSlice';
-import { UserProgressProvider } from './hooks/useUserProgress';
-import { AchievementsProvider } from './hooks/useAchievements';
 import './SCSS/style.scss';
 
 // Layouts
@@ -85,12 +83,15 @@ function AppContent() {
             </Route>
           </Route>
 
-          {/* Rotas de Suporte */}
-          <Route element={<ProtectedRoute />}>
-            <Route path="/support/faq" element={<Faq />} />
-            <Route path="/support/feedback" element={<Feedback />} />
-            <Route path="/support" element={<Support />} />
-          </Route>
+         
+         {/* Rotas de Suporte */}
+            <Route element={<ProtectedRoute />}>
+              <Route element={<MainLayout />}>
+                <Route path="/support/faq" element={<Faq />} />
+                <Route path="/support/feedback" element={<Feedback />} />
+                <Route path="/support" element={<Support />} />
+              </Route>
+            </Route>
 
           {/* Rotas de Pagamento */}
           <Route element={<ProtectedRoute />}>
@@ -123,16 +124,9 @@ function AppContent() {
 
 function App() {
   return (
-    <UserProgressProvider>
-    <AchievementsProvider>
-
     <Provider store={store}>
       <AppContent />
     </Provider>
-
-    </AchievementsProvider>
-  </UserProgressProvider>
-    
   );
 }
 
