@@ -5,6 +5,8 @@ import { store, useAppDispatch } from './redux/store';
 import { loadUser } from './redux/slices/authSlice';
 import { loadUserProgress } from './redux/slices/userProgressSlice';
 import { loadAchievements } from './redux/slices/achievementsSlice';
+import { UserProgressProvider } from './hooks/useUserProgress';
+import { AchievementsProvider } from './hooks/useAchievements';
 import './SCSS/style.scss';
 
 // Layouts
@@ -121,9 +123,16 @@ function AppContent() {
 
 function App() {
   return (
+    <UserProgressProvider>
+    <AchievementsProvider>
+
     <Provider store={store}>
       <AppContent />
     </Provider>
+
+    </AchievementsProvider>
+  </UserProgressProvider>
+    
   );
 }
 

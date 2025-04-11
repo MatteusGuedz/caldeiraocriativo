@@ -25,8 +25,8 @@ const defaultProgress: UserProgress = {
   totalLessonsCompleted: 0,
   lastActive: new Date().toISOString(),
   user: {
-    name: 'Usuário',
-    email: 'usuario@exemplo.com',
+    name: 'Usuário', // Garanta que name sempre existe
+    email: 'usuario@exemplo.com', // Garanta que email sempre existe
     avatar: ImgAvatar
   }
 };
