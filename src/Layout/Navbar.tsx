@@ -11,6 +11,8 @@ interface NavbarProps {
 }
 
 const Navbar = ({ onToggleSidebar }: NavbarProps) => {
+  const { userProgress = { xp: 0, xpToNextLevel: 100, level: 1 } } = useUserProgress() || {};
+  
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearchResults, setShowSearchResults] = useState(false);
@@ -19,7 +21,7 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
   const searchRef = useRef<HTMLDivElement>(null);
   
   const { results, loading, search } = useSearch();
-  const { userProgress } = useUserProgress();
+
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -147,10 +149,9 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
       <div className="navbar-right" ref={dropdownRef}>
         <div className="user-progress">
           <div className="progress-bar">
-            <div 
-              className="progress-fill" 
-              style={{ width: `${(userProgress.xp / userProgress.xpToNextLevel) * 100}%` }}
-            ></div>
+          <div className="progress-fill" 
+  style={{ width: `${userProgress?.xp ? (userProgress.xp / userProgress.xpToNextLevel) * 100 : 0}%` }}
+></div>
           </div>
           <span className="progress-text">Nível {userProgress.level}</span>
         </div>

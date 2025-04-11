@@ -38,7 +38,7 @@ const LoginForm: React.FC = () => {
     handleSubmit,
     formState: { errors }
   } = useForm<LoginFormInputs>({
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schema) as any
   });
 
   const onSubmit = async (data: LoginFormInputs) => {
@@ -62,7 +62,7 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <form className="app-form" onSubmit={handleSubmit(onSubmit)}>
+    <form className="app-form" onSubmit={handleSubmit(onSubmit as any)}>
       <h2 className="form-title">Bem-vindo de volta</h2>
       <p className="form-subtitle">Entre com sua conta para continuar:</p>
       

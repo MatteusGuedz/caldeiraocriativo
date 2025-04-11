@@ -7,8 +7,6 @@ import IconHouseSolid from '../Assets/images/icons/house-solid.svg';
 import IconBookSolid from '../Assets/images/icons/book-solid.svg';
 import IconChart from '../Assets/images/icons/chart-simple-solid.svg';
 import IconCircleInfo from '../Assets/images/icons/circle-info-solid.svg';
-import IconCollapse from '../Assets/images/icons/sidebar-left-svgrepo.svg';
-import IconExpand from '../Assets/images/icons/sidebar-left-svgrepo.svg';
 
 import './Sidebar.scss';
 

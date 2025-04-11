@@ -9,7 +9,7 @@ const Notification: React.FC = () => {
 
   useEffect(() => {
     // Auto-remove notifications after their timeout (default: 5000ms)
-    notifications.forEach(notification => {
+    notifications.forEach((notification: any) => {
       const timeout = notification.timeout || 5000;
       const timer = setTimeout(() => {
         dispatch(removeNotification(notification.id));
@@ -29,7 +29,7 @@ const Notification: React.FC = () => {
 
   return (
     <div className="notification-container">
-      {notifications.map(notification => (
+      {notifications.map((notification: any) => (
         <div 
           key={notification.id} 
           className={`notification ${notification.type}`}

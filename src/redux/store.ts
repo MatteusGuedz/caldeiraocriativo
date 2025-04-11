@@ -6,6 +6,8 @@ import achievementsReducer from './slices/achievementsSlice';
 import errorReducer from './slices/errorSlice';
 import { errorMiddleware } from './middleware/errorMiddleware';
 
+
+
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -25,6 +27,9 @@ export const store = configureStore({
       },
     }).concat(errorMiddleware),
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

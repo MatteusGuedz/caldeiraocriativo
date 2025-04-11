@@ -1,11 +1,11 @@
 // src/Components/ActivityFeed/ActivityFeed.test.tsx
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react/pure';
 import { BrowserRouter } from 'react-router-dom';
 import ActivityFeed from './index';
 
 // Definindo o tipo correto para as atividades de teste
-const mockActivities = [
+const mockActivities = [ 
   {
     id: 1,
     type: 'lesson_completed' as const,

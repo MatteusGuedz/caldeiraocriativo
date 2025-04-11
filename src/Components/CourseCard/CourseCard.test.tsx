@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react/pure';
 import { BrowserRouter } from 'react-router-dom';
 import CourseCard from './index';
 
@@ -8,7 +8,7 @@ const renderWithRouter = (ui: React.ReactElement) => {
   return render(ui, { wrapper: BrowserRouter });
 };
 
-describe('CourseCard Component', () => {
+describe('CourseCard Component', () => { 
   const defaultProps = {
     id: 1,
     title: 'Test Course',

@@ -28,12 +28,12 @@ import Profile from './Pages/Profile';
 // Páginas de Suporte
 import Faq from './Pages/Support/Faq';
 import Feedback from './Pages/Support/Feedback';
-import Support from './Pages/Support/Support'; // Futura implementação
+import Support from './Pages/Support/Support'; 
 
 // Páginas de Checkout e Pagamento
 import Checkout from './Pages/Payment/Subscriptions/Subscriptions';
-import Subscriptions from './Pages/Payment/Subscriptions/Subscriptions'; // Futura implementação
-import PaymentHistory from './Pages/Payment/PaymentHistory'; // Futura implementação
+import Subscriptions from './Pages/Payment/Subscriptions/Subscriptions'; 
+import PaymentHistory from './Pages/Payment/PaymentHistory'; 
 
 // Páginas Administrativas
 import AdminDashboard from './Pages/Admin/Dashboard';

@@ -1,48 +1,45 @@
+// src/Components/Forms/LoginForm.test.tsx
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
+import { configureStore } from '@reduxjs/toolkit';
 import LoginForm from './LoginForm';
 import { signIn } from '../../redux/slices/authSlice';
 
-// Mock the redux store
-const middlewares = [thunk];
-const mockStore = configureStore(middlewares);
-
-// Mock useNavigate
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: () => jest.fn()
-}));
-
-// Mock the signIn action
+// Mock do signIn
 jest.mock('../../redux/slices/authSlice', () => ({
-  signIn: jest.fn().mockImplementation(() => ({
-    type: 'auth/signIn/fulfilled',
-    payload: {
-      user: { name: 'Test User', email: 'test@example.com' },
-      token: 'fake-token'
-    }
-  }))
+  signIn: jest.fn()
 }));
+
+// Definir o tipo para o mock do signIn
+const mockSignIn = signIn as unknown as jest.Mock;
 
 describe('LoginForm Component', () => {
   let store: any;
 
+  // Criamos uma função para criar um store mock
+  const createTestStore = (initialState: any) => {
+    return configureStore({
+      reducer: (state = initialState) => state,
+      middleware: (getDefaultMiddleware) => getDefaultMiddleware()
+    });
+  };
+
   beforeEach(() => {
-    store = mockStore({
+    // Criamos uma nova instância do store antes de cada teste
+    store = createTestStore({
       auth: {
         loading: false,
         error: null
       }
     });
     
-    // Reset mocks
-    (signIn as jest.Mock).mockReset();
+    // Resetamos o mock do signIn antes de cada teste
+    mockSignIn.mockReset();
   });
 
+  // Função auxiliar para renderizar o componente com o Provider
   const renderWithProviders = (ui: React.ReactElement) => {
     return render(
       <Provider store={store}>
@@ -100,8 +97,8 @@ describe('LoginForm Component', () => {
   });
 
   test('submits the form with valid data', async () => {
-    // Mock the signIn action to return a fulfilled promise
-    (signIn as jest.Mock).mockReturnValue({
+    // Configuramos o mock do signIn para retornar um valor específico
+    mockSignIn.mockReturnValue({
       type: 'auth/signIn/fulfilled',
       payload: {
         user: { name: 'Test User', email: 'test@example.com' },
@@ -126,7 +123,7 @@ describe('LoginForm Component', () => {
     
     // Check if the signIn action was dispatched with correct arguments
     await waitFor(() => {
-      expect(signIn).toHaveBeenCalledWith({
+      expect(mockSignIn).toHaveBeenCalledWith({
         email: 'test@example.com',
         password: 'password123'
       });
@@ -135,7 +132,7 @@ describe('LoginForm Component', () => {
 
   test('shows loading state when submitting', async () => {
     // Update the store to simulate loading state
-    store = mockStore({
+    store = createTestStore({
       auth: {
         loading: true,
         error: null
@@ -152,7 +149,7 @@ describe('LoginForm Component', () => {
 
   test('shows error message when login fails', () => {
     // Update the store to simulate an error state
-    store = mockStore({
+    store = createTestStore({
       auth: {
         loading: false,
         error: 'Credenciais inválidas'

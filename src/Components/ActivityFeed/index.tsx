@@ -1,5 +1,5 @@
 // src/Components/ActivityFeed/index.tsx
-import React, { memo, useMemo } from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import './ActivityFeed.scss';
 
