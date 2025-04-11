@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useForm, DefaultValues } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
@@ -10,11 +10,11 @@ import './FormStyles.scss';
 interface LoginFormInputs {
   email: string;
   password: string;
-  rememberMe?: boolean;
+  rememberMe: boolean;
 }
 
-// Validation schema
-const schema = yup.object({
+// Schema de validação com yup
+const schema = yup.object().shape({
   email: yup
     .string()
     .email('Digite um e-mail válido')
@@ -23,7 +23,7 @@ const schema = yup.object({
     .string()
     .min(6, 'A senha deve ter pelo menos 6 caracteres')
     .required('Senha é obrigatória'),
-  rememberMe: yup.boolean()
+  rememberMe: yup.boolean().default(false)
 });
 
 const LoginForm: React.FC = () => {
@@ -32,7 +32,7 @@ const LoginForm: React.FC = () => {
   const { loading, error } = useAppSelector(state => state.auth);
   const [showPassword, setShowPassword] = useState(false);
 
-  const defaultValues: DefaultValues<LoginFormInputs> = {
+  const defaultValues: LoginFormInputs = {
     email: '',
     password: '',
     rememberMe: false
@@ -48,7 +48,7 @@ const LoginForm: React.FC = () => {
     mode: 'onBlur'
   });
 
-  const onSubmit = async (data: LoginFormInputs) => {
+  const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
     try {
       const resultAction = await dispatch(signIn({
         email: data.email,
@@ -63,10 +63,6 @@ const LoginForm: React.FC = () => {
     }
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
   return (
     <form className="app-form" onSubmit={handleSubmit(onSubmit)}>
       <h2 className="form-title">Bem-vindo de volta</h2>
@@ -79,9 +75,9 @@ const LoginForm: React.FC = () => {
         <input
           id="email"
           type="email"
-          placeholder="Seu e-mail"
           {...register('email')}
           className={errors.email ? 'has-error' : ''}
+          placeholder="Seu e-mail"
         />
         {errors.email && <span className="error-message">{errors.email.message}</span>}
       </div>
@@ -92,14 +88,14 @@ const LoginForm: React.FC = () => {
           <input
             id="password"
             type={showPassword ? 'text' : 'password'}
-            placeholder="Sua senha"
             {...register('password')}
             className={errors.password ? 'has-error' : ''}
+            placeholder="Sua senha"
           />
           <button
             type="button"
             className="toggle-password"
-            onClick={togglePasswordVisibility}
+            onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? '👁️' : '👁️‍🗨️'}
           </button>

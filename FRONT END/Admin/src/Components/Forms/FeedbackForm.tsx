@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useForm, DefaultValues } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useAppDispatch } from '../../redux/store';
@@ -13,8 +13,8 @@ interface FeedbackFormInputs {
   message: string;
 }
 
-// Validation schema
-const schema = yup.object({
+// Schema de validação
+const schema = yup.object().shape({
   name: yup
     .string()
     .required('Nome é obrigatório')
@@ -40,7 +40,7 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onSubmitSuccess }) => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
 
-  const defaultValues: DefaultValues<FeedbackFormInputs> = {
+  const defaultValues: FeedbackFormInputs = {
     name: '',
     email: '',
     topic: '',
@@ -58,11 +58,11 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onSubmitSuccess }) => {
     mode: 'onBlur'
   });
 
-  const onSubmit = async (data: FeedbackFormInputs) => {
+  const onSubmit: SubmitHandler<FeedbackFormInputs> = async (data) => {
     try {
       setLoading(true);
       
-      // Aqui você faria a chamada para a API
+      // Simulação de chamada à API
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       dispatch(showNotification({
@@ -96,9 +96,9 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onSubmitSuccess }) => {
         <input
           id="name"
           type="text"
-          placeholder="Seu nome completo"
           {...register('name')}
           className={errors.name ? 'has-error' : ''}
+          placeholder="Seu nome completo"
         />
         {errors.name && <span className="error-message">{errors.name.message}</span>}
       </div>
@@ -108,9 +108,9 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onSubmitSuccess }) => {
         <input
           id="email"
           type="email"
-          placeholder="Seu e-mail"
           {...register('email')}
           className={errors.email ? 'has-error' : ''}
+          placeholder="Seu e-mail"
         />
         {errors.email && <span className="error-message">{errors.email.message}</span>}
       </div>
@@ -135,10 +135,10 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onSubmitSuccess }) => {
         <label htmlFor="message">Sua Mensagem</label>
         <textarea
           id="message"
-          placeholder="Descreva detalhadamente seu feedback..."
-          rows={5}
           {...register('message')}
           className={errors.message ? 'has-error' : ''}
+          placeholder="Descreva detalhadamente seu feedback..."
+          rows={5}
         />
         {errors.message && <span className="error-message">{errors.message.message}</span>}
       </div>

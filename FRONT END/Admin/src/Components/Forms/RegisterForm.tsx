@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useForm, DefaultValues } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
@@ -15,8 +15,8 @@ interface RegisterFormInputs {
   agreeTerms: boolean;
 }
 
-// Validation schema
-const schema = yup.object({
+// Schema de validação
+const schema = yup.object().shape({
   name: yup
     .string()
     .required('Nome é obrigatório')
@@ -44,7 +44,7 @@ const RegisterForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const defaultValues: DefaultValues<RegisterFormInputs> = {
+  const defaultValues: RegisterFormInputs = {
     name: '',
     email: '',
     password: '',
@@ -62,11 +62,11 @@ const RegisterForm: React.FC = () => {
     mode: 'onBlur'
   });
 
-  const onSubmit = async (data: RegisterFormInputs) => {
+  const onSubmit: SubmitHandler<RegisterFormInputs> = async (data) => {
     try {
       setLoading(true);
       
-      // Aqui você faria a chamada para a API real
+      // Simulação de chamada à API
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       dispatch(showNotification({
@@ -86,10 +86,6 @@ const RegisterForm: React.FC = () => {
     }
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
   return (
     <form className="app-form" onSubmit={handleSubmit(onSubmit)}>
       <h2 className="form-title">Crie sua conta</h2>
@@ -100,9 +96,9 @@ const RegisterForm: React.FC = () => {
         <input
           id="name"
           type="text"
-          placeholder="Seu nome completo"
           {...register('name')}
           className={errors.name ? 'has-error' : ''}
+          placeholder="Seu nome completo"
         />
         {errors.name && <span className="error-message">{errors.name.message}</span>}
       </div>
@@ -112,9 +108,9 @@ const RegisterForm: React.FC = () => {
         <input
           id="email"
           type="email"
-          placeholder="Seu e-mail"
           {...register('email')}
           className={errors.email ? 'has-error' : ''}
+          placeholder="Seu e-mail"
         />
         {errors.email && <span className="error-message">{errors.email.message}</span>}
       </div>
@@ -125,14 +121,14 @@ const RegisterForm: React.FC = () => {
           <input
             id="password"
             type={showPassword ? 'text' : 'password'}
-            placeholder="Sua senha"
             {...register('password')}
             className={errors.password ? 'has-error' : ''}
+            placeholder="Sua senha"
           />
           <button
             type="button"
             className="toggle-password"
-            onClick={togglePasswordVisibility}
+            onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? '👁️' : '👁️‍🗨️'}
           </button>
@@ -146,9 +142,9 @@ const RegisterForm: React.FC = () => {
           <input
             id="confirmPassword"
             type={showPassword ? 'text' : 'password'}
-            placeholder="Confirme sua senha"
             {...register('confirmPassword')}
             className={errors.confirmPassword ? 'has-error' : ''}
+            placeholder="Confirme sua senha"
           />
         </div>
         {errors.confirmPassword && (
