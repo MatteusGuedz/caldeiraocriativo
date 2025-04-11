@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 export interface Achievement {
   id: number;
@@ -7,126 +7,72 @@ export interface Achievement {
   icon: string;
   unlocked: boolean;
   unlockedAt?: string;
-  requiredProgress?: number;
-  currentProgress?: number;
 }
 
-const defaultAchievements: Achievement[] = [
+// Conquistas iniciais mockadas
+const initialAchievements: Achievement[] = [
   {
     id: 1,
-    name: 'Primeira Aula',
-    description: 'Assista sua primeira aula na plataforma',
-    icon: '🎓',
-    unlocked: false,
-    requiredProgress: 1,
-    currentProgress: 0
+    name: 'Primeiro Passo',
+    description: 'Conclua sua primeira aula',
+    icon: '🚀',
+    unlocked: false
   },
-  // ... outros achievements
+  {
+    id: 2,
+    name: 'Aprendiz Dedicado',
+    description: 'Complete 5 aulas de um curso',
+    icon: '📚',
+    unlocked: false
+  },
+  {
+    id: 3,
+    name: 'Criativo Master',
+    description: 'Conclua um curso completo',
+    icon: '🏆',
+    unlocked: false
+  }
 ];
 
-interface AchievementsContextData {
-  achievements: Achievement[];
-  loading: boolean;
-  updateAchievementProgress: (achievementId: number, progressIncrement?: number) => void;
-  unlockAchievement: (achievementId: number) => void;
-}
+export const useAchievements = () => {
+  const [achievements, setAchievements] = useState<Achievement[]>(() => {
+    // Recuperar conquistas do localStorage ou usar iniciais
+    const savedAchievements = localStorage.getItem('user-achievements');
+    return savedAchievements 
+      ? JSON.parse(savedAchievements) 
+      : initialAchievements;
+  });
 
-const AchievementsContext = createContext<AchievementsContextData>({} as AchievementsContextData);
-
-export const AchievementsProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [achievements, setAchievements] = useState<Achievement[]>([]);
-  const [loading, setLoading] = useState(true);
-  
+  // Salvar conquistas sempre que mudarem
   useEffect(() => {
-    const loadAchievements = () => {
-      const storedAchievements = localStorage.getItem('achievements');
-      if (storedAchievements) {
-        setAchievements(JSON.parse(storedAchievements));
-      } else {
-        setAchievements(defaultAchievements);
-        localStorage.setItem('achievements', JSON.stringify(defaultAchievements));
-      }
-      setLoading(false);
-    };
-    
-    loadAchievements();
-  }, []);
-  
-  const updateAchievementProgress = (
-    achievementId: number, 
-    progressIncrement: number = 1
-  ) => {
-    setAchievements(prevAchievements => {
-      const updatedAchievements = prevAchievements.map(achievement => {
-        if (achievement.id === achievementId && !achievement.unlocked) {
-          const newProgress = (achievement.currentProgress || 0) + progressIncrement;
-          const requiredProgress = achievement.requiredProgress || 1;
-          
-          if (newProgress >= requiredProgress) {
-            const updatedAchievement = {
-              ...achievement,
-              unlocked: true,
-              unlockedAt: new Date().toISOString(),
-              currentProgress: requiredProgress
-            };
-            
-            return updatedAchievement;
-          }
-          
-          return {
-            ...achievement,
-            currentProgress: newProgress
-          };
-        }
-        return achievement;
-      });
-      
-      localStorage.setItem('achievements', JSON.stringify(updatedAchievements));
-      
-      return updatedAchievements;
-    });
-  };
-  
-  const unlockAchievement = (achievementId: number) => {
-    setAchievements(prevAchievements => {
-      const updatedAchievements = prevAchievements.map(achievement => {
+    localStorage.setItem('user-achievements', JSON.stringify(achievements));
+  }, [achievements]);
+
+  const updateAchievementProgress = useCallback((achievementId: number) => {
+    setAchievements(currentAchievements => 
+      currentAchievements.map(achievement => {
         if (achievement.id === achievementId && !achievement.unlocked) {
           return {
             ...achievement,
             unlocked: true,
-            unlockedAt: new Date().toISOString(),
-            currentProgress: achievement.requiredProgress
+            unlockedAt: new Date().toISOString()
           };
         }
         return achievement;
-      });
-      
-      localStorage.setItem('achievements', JSON.stringify(updatedAchievements));
-      
-      return updatedAchievements;
-    });
+      })
+    );
+  }, []);
+
+  const unlockAchievement = useCallback((achievementId: number) => {
+    updateAchievementProgress(achievementId);
+  }, [updateAchievementProgress]);
+
+  // Garantir que sempre retorne um array
+  const safeAchievements = achievements || [];
+
+  return {
+    achievements: safeAchievements,
+    updateAchievementProgress,
+    unlockAchievement
   };
-
-  return (
-    <AchievementsContext.Provider
-      value={{
-        achievements,
-        loading,
-        updateAchievementProgress,
-        unlockAchievement
-      }}
-    >
-      {children}
-    </AchievementsContext.Provider>
-  );
 };
-
-export function useAchievements(): AchievementsContextData {
-  const context = useContext(AchievementsContext);
-  
-  if (!context) {
-    throw new Error('useAchievements deve ser usado dentro de um AchievementsProvider');
-  }
-  
-  return context;
-}

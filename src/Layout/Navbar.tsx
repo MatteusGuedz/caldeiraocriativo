@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import avatarImg from '../Assets/images/avatar.jpg';
 import { useSearch, SearchResult } from '../hooks/useSearch';
 import { useUserProgress } from '../hooks/useUserProgress';
+import { Bell, BellOff } from 'lucide-react'; // Importa ícones de sino
 
 interface NavbarProps {
   onToggleSidebar: () => void;
@@ -264,11 +265,16 @@ const NotificationBell = () => {
   return (
     <div className="notification-container" ref={notificationRef}>
       <div className="notification-bell" onClick={toggleNotifications}>
-        <span className="notification-icon">🔔</span>
-        {unreadCount > 0 && (
-          <span className="notification-badge">{unreadCount}</span>
-        )}
-      </div>
+  <Bell 
+    color="#ffffff" 
+    size={24} 
+    strokeWidth={2} 
+    className="notification-icon"
+  />
+  {unreadCount > 0 && (
+    <span className="notification-badge">{unreadCount}</span>
+  )}
+</div>
       
       {showNotifications && (
         <div className="notification-dropdown">

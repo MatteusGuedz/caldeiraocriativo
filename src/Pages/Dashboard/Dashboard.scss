@@ -312,6 +312,10 @@
       transform: translateX(0);
     }
   }
+
+  .animatable-element {
+    will-change: transform, opacity;
+  }
   
   // Responsividade
   @media (max-width: $desktop) {

@@ -48,6 +48,7 @@ const Analytics: React.FC = () => {
           { id: 2, title: 'Design Thinking Avançado', enrollments: 280, completionRate: 62 },
           { id: 3, title: 'Criatividade na Prática', enrollments: 245, completionRate: 58 },
         ],
+        
       };
       
       setData(mockData);

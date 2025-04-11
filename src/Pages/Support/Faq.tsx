@@ -81,13 +81,13 @@ const Faq: React.FC = () => {
 
   return (
     <div className="main-layout">
-      <Navbar onToggleSidebar={toggleMobileSidebar} />
+      {/* <Navbar onToggleSidebar={toggleMobileSidebar} /> */}
       <div className="main-body">
-        <Sidebar 
+        {/* <Sidebar 
           mobileOpen={mobileSidebarOpen}
           collapsed={collapsedSidebar}
           onToggleCollapse={toggleSidebarCollapse}
-        />
+        /> */}
         <main className="main-content faq-page">
           <div className="faq-header">
             <h1>Central de Ajuda</h1>

@@ -33,3 +33,15 @@ $transition-slow: all 0.5s ease;
 $border-radius-sm: 0.25rem;
 $border-radius-md: 0.5rem;
 $border-radius-lg: 1rem;
+
+
+$icon-sm: 1rem;
+$icon-md: 1.5rem;
+$icon-lg: 2rem;
+
+// Classe utilitária
+.icon {
+  &-sm { font-size: $icon-sm; }
+  &-md { font-size: $icon-md; }
+  &-lg { font-size: $icon-lg; }
+}
