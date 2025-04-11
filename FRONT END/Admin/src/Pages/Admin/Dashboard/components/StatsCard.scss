@@ -1,0 +1,64 @@
+@import '../../../../SCSS/_variables.scss';
+
+.stats-card {
+  background: $secondary-color; // Em vez de background: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .stats-icon {
+    font-size: 2rem;
+    background: rgba(255, 255, 255, 0.05); // Fundo mais escuro
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+  }
+  
+  .stats-info {
+    flex: 1;
+    
+    h3 {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: $text-secondary;
+      margin: 0 0 0.5rem 0;
+    }
+    
+    .stats-value {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: $text-primary;
+      margin-bottom: 0.5rem;
+    }
+    
+    .stats-change {
+      font-size: 0.875rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      
+      &.positive {
+        color: #10b981;
+      }
+      
+      &.negative {
+        color: #ef4444;
+      }
+      
+      .period {
+        color: $text-secondary;
+        font-weight: 400;
+        margin-left: 0.5rem;
+      }
+    }
+  }
+}

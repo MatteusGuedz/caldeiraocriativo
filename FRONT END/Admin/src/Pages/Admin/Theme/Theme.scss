@@ -1,0 +1,184 @@
+@import '../../../SCSS/_variables.scss';
+
+.admin-theme-page {
+  padding: 30px;
+  background-color: $primary-color;
+  color: $text-primary;
+
+  .theme-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+
+    h1 {
+      font-size: 2rem;
+      margin: 0;
+      color: $text-primary;
+    }
+
+    .theme-actions {
+      display: flex;
+      gap: 15px;
+
+      .btn-reset {
+        background-color: rgba(255, 255, 255, 0.05);
+        color: $text-primary;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 10px 20px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+      }
+
+      .btn-save {
+        background-color: $accent-color;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background-color: darken($accent-color, 10%);
+        }
+
+        &.saving {
+          opacity: 0.7;
+          cursor: not-allowed;
+        }
+
+        &:disabled {
+          opacity: 0.7;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+
+  .theme-customization-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 30px;
+
+    .theme-colors, 
+    .theme-typography, 
+    .theme-preview {
+      background: $secondary-color;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+      h2 {
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-size: 1.2rem;
+        color: $text-primary;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 10px;
+      }
+    }
+  }
+
+  .color-picker {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+
+    label {
+      font-size: 0.9rem;
+      color: $text-secondary;
+    }
+
+    input[type="color"] {
+      // -webkit-appearance: none;
+      border: none;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      background: none;
+    }
+
+    input[type="color"]::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    input[type="color"]::-webkit-color-swatch {
+      border: none;
+      border-radius: 50%;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.1);
+    }
+  }
+
+  .font-selector {
+    .font-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+
+      select, input {
+        padding: 8px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 6px;
+        color: $text-primary;
+      }
+
+      label {
+        font-size: 0.9rem;
+        color: $text-secondary;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .layout-preview {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+
+    .preview-navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .preview-content {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      gap: 20px;
+      flex-grow: 1;
+    }
+
+    .preview-sidebar {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+    }
+
+    .preview-main {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    .theme-customization-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .theme-customization-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}
