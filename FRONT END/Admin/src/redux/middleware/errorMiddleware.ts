@@ -13,8 +13,8 @@ export const errorMiddleware: Middleware = ({ dispatch }) => (next) => (action) 
     
     if (typeof action.payload === 'string') {
       errorMessage = action.payload;
-    } else if (action.payload && typeof action.payload === 'object') {
-      errorMessage = action.payload.message || 'Ocorreu um erro na requisição';
+    } else if (action.payload && typeof action.payload === 'object' && 'message' in action.payload) {
+      errorMessage = (action.payload as { message: string }).message || 'Ocorreu um erro na requisição';
     } else {
       errorMessage = 'Ocorreu um erro na requisição';
     }

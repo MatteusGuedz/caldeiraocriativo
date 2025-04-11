@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, DefaultValues } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useAppDispatch } from '../../redux/store';
@@ -14,7 +14,7 @@ interface FeedbackFormInputs {
 }
 
 // Validation schema
-const schema = yup.object().shape({
+const schema = yup.object({
   name: yup
     .string()
     .required('Nome é obrigatório')
@@ -40,13 +40,22 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onSubmitSuccess }) => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
 
+  const defaultValues: DefaultValues<FeedbackFormInputs> = {
+    name: '',
+    email: '',
+    topic: '',
+    message: ''
+  };
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors }
   } = useForm<FeedbackFormInputs>({
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schema),
+    defaultValues,
+    mode: 'onBlur'
   });
 
   const onSubmit = async (data: FeedbackFormInputs) => {
@@ -54,19 +63,15 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onSubmitSuccess }) => {
       setLoading(true);
       
       // Aqui você faria a chamada para a API
-      // Por enquanto, vamos simular
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Simulando sucesso
       dispatch(showNotification({
         message: 'Feedback enviado com sucesso! Obrigado por contribuir.',
         type: 'success'
       }));
       
-      // Resetar o formulário
       reset();
       
-      // Chamar callback de sucesso se existir
       if (onSubmitSuccess) {
         onSubmitSuccess();
       }

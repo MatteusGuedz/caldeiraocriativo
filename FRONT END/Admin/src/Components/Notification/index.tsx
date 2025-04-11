@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../redux/store';
 import { removeNotification } from '../../redux/slices/errorSlice';
+import { Notification } from '../../redux/slices/errorSlice'; // Importe o tipo
 import './style.scss';
 
-const Notification: React.FC = () => {
+const NotificationComponent: React.FC = () => {
   const dispatch = useAppDispatch();
   const { notifications } = useAppSelector(state => state.error);
 
   useEffect(() => {
     // Auto-remove notifications after their timeout (default: 5000ms)
-    notifications.forEach(notification => {
+    notifications.forEach((notification: Notification) => {
       const timeout = notification.timeout || 5000;
       const timer = setTimeout(() => {
         dispatch(removeNotification(notification.id));
@@ -29,7 +30,7 @@ const Notification: React.FC = () => {
 
   return (
     <div className="notification-container">
-      {notifications.map(notification => (
+      {notifications.map((notification: Notification) => (
         <div 
           key={notification.id} 
           className={`notification ${notification.type}`}
@@ -53,4 +54,4 @@ const Notification: React.FC = () => {
   );
 };
 
-export default Notification;
+export default NotificationComponent;

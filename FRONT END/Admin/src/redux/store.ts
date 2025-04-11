@@ -26,5 +26,9 @@ export const store = configureStore({
     }).concat(errorMiddleware),
 });
 
+// Tipagem para dispatch e state
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

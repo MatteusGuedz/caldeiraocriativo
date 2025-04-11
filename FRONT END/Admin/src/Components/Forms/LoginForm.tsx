@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, DefaultValues } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
@@ -13,9 +13,8 @@ interface LoginFormInputs {
   rememberMe?: boolean;
 }
 
-
 // Validation schema
-const schema = yup.object().shape({
+const schema = yup.object({
   email: yup
     .string()
     .email('Digite um e-mail válido')
@@ -33,12 +32,20 @@ const LoginForm: React.FC = () => {
   const { loading, error } = useAppSelector(state => state.auth);
   const [showPassword, setShowPassword] = useState(false);
 
+  const defaultValues: DefaultValues<LoginFormInputs> = {
+    email: '',
+    password: '',
+    rememberMe: false
+  };
+
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm<LoginFormInputs>({
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schema),
+    defaultValues,
+    mode: 'onBlur'
   });
 
   const onSubmit = async (data: LoginFormInputs) => {
@@ -48,7 +55,6 @@ const LoginForm: React.FC = () => {
         password: data.password
       }));
       
-      // If login was successful, redirect to dashboard
       if (signIn.fulfilled.match(resultAction)) {
         navigate('/dashboard');
       }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, DefaultValues } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +16,7 @@ interface RegisterFormInputs {
 }
 
 // Validation schema
-const schema = yup.object().shape({
+const schema = yup.object({
   name: yup
     .string()
     .required('Nome é obrigatório')
@@ -44,12 +44,22 @@ const RegisterForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
+  const defaultValues: DefaultValues<RegisterFormInputs> = {
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    agreeTerms: false
+  };
+
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm<RegisterFormInputs>({
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schema),
+    defaultValues,
+    mode: 'onBlur'
   });
 
   const onSubmit = async (data: RegisterFormInputs) => {
@@ -57,10 +67,8 @@ const RegisterForm: React.FC = () => {
       setLoading(true);
       
       // Aqui você faria a chamada para a API real
-      // Por enquanto, vamos simular
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Simulando sucesso
       dispatch(showNotification({
         message: 'Registro realizado com sucesso! Você já pode fazer login.',
         type: 'success'
