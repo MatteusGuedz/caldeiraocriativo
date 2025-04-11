@@ -1,15 +1,13 @@
 // src/components/ProtectedRoute.tsx
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useAppSelector } from '../../redux/store';
 
 const ProtectedRoute: React.FC = () => {
-  const { signed, loading } = useAuth();
-
-  
+  const { isAuthenticated, loading } = useAppSelector(state => state.auth);
   
   // Adicionando console.log para debug
-  console.log('ProtectedRoute status:', { signed, loading });
+  console.log('ProtectedRoute status:', { isAuthenticated, loading });
   
   // Mostrar um carregamento apenas por curto período, com timeout de segurança
   if (loading) {
@@ -21,7 +19,7 @@ const ProtectedRoute: React.FC = () => {
   }
   
   // Se não estiver autenticado após carregar, redirecionar para login
-  if (!signed) {
+  if (!isAuthenticated) {
     console.log('Não autenticado, redirecionando para login');
     return <Navigate to="/login" replace />;
   }
